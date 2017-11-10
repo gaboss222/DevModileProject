@@ -17,13 +17,14 @@ public class ReadFile {
     public ReadFile(){}
 
 
+
     public HistoryNode readNode(String fileName, Context context)
     {
         HashMap<String,String> childNodes = new HashMap<>();
         StringBuilder text = new StringBuilder();
         try {
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(context.getAssets().open(fileName),"UTF-8"));
+            BufferedReader br = new BufferedReader(new InputStreamReader(context.getAssets().open(""+fileName),"UTF-8"));
             String line;
             while ((line = br.readLine()) != null) {
                 if(line.length() > 0) {
@@ -44,9 +45,7 @@ public class ReadFile {
             text.append("Some shit append");
         }
         if(childNodes.isEmpty())
-        {
             childNodes = null;
-        }
         return new HistoryNode(text.toString(), childNodes);
     }
 }

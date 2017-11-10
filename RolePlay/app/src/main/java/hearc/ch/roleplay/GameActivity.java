@@ -77,12 +77,18 @@ public class GameActivity extends AppCompatActivity
         buttons.clear();
         String firstChar = actualNode.strText.substring(0, 1);
         if(firstChar.equals("*")) {
-
+                //Fight or Run
         }
         else {
             textDisplay.setText(actualNode.strText);
-            for (Map.Entry<String, String> entry : actualNode.accessibleNodes.entrySet()) {
-                CreateButton(entry.getKey(), entry.getValue());
+            if(actualNode.accessibleNodes != null) {
+                for (Map.Entry<String, String> entry : actualNode.accessibleNodes.entrySet()) {
+                    CreateButton(entry.getKey(), entry.getValue());
+                }
+            }
+            else
+            {
+
             }
         }
     }
