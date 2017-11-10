@@ -7,7 +7,11 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Created by gabriel.griesser on 27.10.2017.
@@ -16,11 +20,11 @@ import android.widget.TextView;
 public class GameActivity extends AppCompatActivity
 {
 
-    private Button btnRep1, btnRep2, btnRep3;
-    private TextView txtGameDescription = null;
-    private TextView txtGameBienvenu = null;
-    private String pseudo = null;
-    private String filename = null;
+    HistoryNode actualNode;
+    ArrayList<HistoryNode> hNodes;
+    ArrayList<Button> buttons;
+    ReadFile reader;
+    TextView textDisplay;
 
     //TODO Créer méthode pour récupérer fichier texte test.txt
     //Puis l'ajouter dans player via une méthode
@@ -32,47 +36,63 @@ public class GameActivity extends AppCompatActivity
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.game_menu);
 
-        btnRep1 = (Button)findViewById(R.id.btnRep1);
-        btnRep2 = (Button)findViewById(R.id.btnRep2);
-        btnRep3 = (Button)findViewById(R.id.btnRep3);
-        txtGameDescription = (TextView)findViewById(R.id.txtGameDescription);
-        txtGameDescription.setMovementMethod(new ScrollingMovementMethod());
-        pseudo = getIntent().getStringExtra("Pseudo");
-        btnRep1.setOnClickListener(clickRep1);
+        Initialisation();
+        DisplayNode();
     }
 
 
-    private void test(String msg)
+    public void Initialisation()
     {
-        txtGameDescription.setText(msg);
+        reader = new ReadFile();
+        textDisplay = (TextView)findViewById(R.id.txtGameDescription);
+
+        hNodes = new ArrayList<>();
+        buttons = new ArrayList<>();
+        actualNode = reader.readNode("A1.txt", this.getApplicationContext());
     }
-    private View.OnClickListener clickRep1 = new View.OnClickListener()
+
+    public void CreateButton(String tag, String val)
     {
-        @Override
-        public void onClick(View v)
-        {
-            test(pseudo);
-        }
-    };
+        Button myButton = new Button(this);
+        myButton.setText(val);
+        myButton.setTag(tag);
+        myButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoadNode(v);
+            }
+        });
+        buttons.add(myButton);
+        LinearLayout ll = (LinearLayout)findViewById(R.id.buttonLayout);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        ll.addView(myButton, lp);
+    }
 
-    private View.OnClickListener clickRep2 = new View.OnClickListener()
+
+    public void DisplayNode()
     {
-        @Override
-        public void onClick(View v)
-        {
-            //On démarre une nouvelle partie
+        LinearLayout ll = (LinearLayout)findViewById(R.id.buttonLayout);
+        for(Button b : buttons)
+            ll.removeView(b);
+        buttons.clear();
+        String firstChar = actualNode.strText.substring(0, 1);
+        if(firstChar.equals("*")) {
 
         }
-    };
+        else {
+            textDisplay.setText(actualNode.strText);
+            for (Map.Entry<String, String> entry : actualNode.accessibleNodes.entrySet()) {
+                CreateButton(entry.getKey(), entry.getValue());
+            }
+        }
+    }
 
-    private View.OnClickListener clickRep3 = new View.OnClickListener()
+    public void LoadNode(View v)
     {
-        @Override
-        public void onClick(View v)
-        {
-            //On démarre une nouvelle partie
-
-        }
-    };
+        String strId = v.getTag().toString() + ".txt";
+        hNodes.add(actualNode);
+        actualNode = reader.readNode(strId, this.getApplicationContext());
+        DisplayNode();
+    }
 
 }

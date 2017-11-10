@@ -27,44 +27,11 @@
         android:layout_width="170dp"
         android:layout_height="170dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
         android:layout_marginBottom="15dp"
         android:orientation="vertical"
-        android:id="@+id/linearLayout">
-
-        <Button
-            android:id="@+id/btnRep1"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|center_horizontal"
-            android:layout_marginTop="10dp"
-            android:fontFamily="casual"
-            android:text="Button1"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="21sp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/btnRep2"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|center_horizontal"
-            android:fontFamily="casual"
-            android:text="Button2"
-            android:textColor="@color/colorPrimaryDark2"
-            android:textSize="21sp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/btnRep3"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|center_horizontal"
-            android:fontFamily="casual"
-            android:text="Button3"
-            android:textColor="@color/colorPrimaryDark3"
-            android:textSize="21sp"
-            android:textStyle="bold" />
+        android:id="@+id/buttonLayout"
+        android:layout_alignStart="@+id/txtGameDescription"
+        android:layout_alignEnd="@+id/txtGameDescription">
 
     </LinearLayout>
 
@@ -73,7 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@android:drawable/alert_dark_frame"
-        android:layout_above="@+id/linearLayout"
+        android:layout_above="@+id/buttonLayout"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="15dp" />
 
