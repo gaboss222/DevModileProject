@@ -45,7 +45,7 @@ public class GameActivity extends AppCompatActivity
     {
         reader = new ReadFile();
         textDisplay = (TextView)findViewById(R.id.txtGameDescription);
-
+        textDisplay.setMovementMethod(new ScrollingMovementMethod());
         hNodes = new ArrayList<>();
         buttons = new ArrayList<>();
         actualNode = reader.readNode("A1.txt", this.getApplicationContext());
@@ -58,8 +58,16 @@ public class GameActivity extends AppCompatActivity
         myButton.setTag(tag);
         myButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                LoadNode(v);
+            public void onClick(View v)
+            {
+                if(v.getTag().equals("DEAD"))
+                {
+
+                }
+                else
+                {
+                    LoadNode(v);
+                }
             }
         });
         buttons.add(myButton);
@@ -76,29 +84,40 @@ public class GameActivity extends AppCompatActivity
             ll.removeView(b);
         buttons.clear();
         String firstChar = actualNode.strText.substring(0, 1);
-        if(firstChar.equals("*")) {
-                //Fight or Run
+        if(firstChar.equals("*"))
+        {
+
         }
-        else {
+        else
+        {
             textDisplay.setText(actualNode.strText);
-            if(actualNode.accessibleNodes != null) {
-                for (Map.Entry<String, String> entry : actualNode.accessibleNodes.entrySet()) {
+            if(actualNode.accessibleNodes != null)
+            {
+                for (Map.Entry<String, String> entry : actualNode.accessibleNodes.entrySet())
+                {
                     CreateButton(entry.getKey(), entry.getValue());
                 }
             }
             else
             {
-
+                CreateButton("DEAD", "Vous êtes mort !");
             }
+
         }
     }
 
     public void LoadNode(View v)
     {
-        String strId = v.getTag().toString() + ".txt";
-        hNodes.add(actualNode);
-        actualNode = reader.readNode(strId, this.getApplicationContext());
-        DisplayNode();
+        if(v.getTag().toString() != "DEAD") {
+            String strId = v.getTag().toString() + ".txt";
+            hNodes.add(actualNode);
+            actualNode = reader.readNode(strId, this.getApplicationContext());
+            DisplayNode();
+        }
+        else
+        {
+            //textDisplay.setText("You are dead, try again...");
+        }
     }
 
 }

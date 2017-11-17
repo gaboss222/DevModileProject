@@ -47,7 +47,7 @@ public class MenuActivity extends AppCompatActivity {
         @Override
         public void onClick(View v)
         {
-            //On charge une partie
+            //On charge une partie --> ReadFile
         }
     };
     private View.OnClickListener clickListenerBtnQuitGame = new View.OnClickListener()
