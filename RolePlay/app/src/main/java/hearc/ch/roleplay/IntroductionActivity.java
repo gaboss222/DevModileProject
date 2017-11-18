@@ -67,30 +67,30 @@ public class IntroductionActivity extends AppCompatActivity implements View.OnCl
         pseudoEditText.setText(msg);
     }
 
+    private void setTextView(String msg){ txtLORE.setText(msg); }
+
     @Override
     public void onClick(View v)
     {
         if(getPseudoEditText() != null)
         {
-            //TEST PSEUDO SAUVEGARDE
-            if(getPseudoEditText()!=null)
+            ReadFile r = new ReadFile();
+            if(r.isNameIsInFile(this, pseudo))
             {
-                ReadFile r = new ReadFile();
-                r.checkIfNameIsInFile(this, pseudo);
+                setTextView("Pseudo déjà utilisé");
+            }
+            else
+            {
+                Log.e("isNameIsInFile", "no");
                 Player p = new Player(pseudo);
                 Intent intent = new Intent(this, GameActivity.class);
                 intent.putExtra("Pseudo", pseudo);
                 startActivity(intent);
             }
-            else
-            {
-                setPseudoEditText("Pseudo déjà utilisé");
-            }
-
         }
         else
         {
-            setPseudoEditText("Rentrez un pseudoEditText");
+            setTextView("Rentrez un pseudoEditText");
         }
 
     }

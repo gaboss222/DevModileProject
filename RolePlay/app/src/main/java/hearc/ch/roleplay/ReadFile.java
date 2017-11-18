@@ -69,7 +69,7 @@ public class ReadFile
         return true;
     }
 
-    public void checkIfNameIsInFile(Context context, String pseudo)
+    public boolean isNameIsInFile(Context context, String pseudo)
     {
         if(fileExists(context))
         {
@@ -99,11 +99,14 @@ public class ReadFile
                     if (data.contains(pseudo))
                     {
                         Log.i("File info", "File contains the pseudo " + pseudo);
+                        Log.i("File data", data.toString());
+                        return true;
                     }
                     //Sinon, on ecrit le pseudo dans le fichier
                     else
                     {
                         writeToFile(context, pseudo);
+                        return false;
                     }
                 }
             }
@@ -115,7 +118,9 @@ public class ReadFile
         else
         {
             createFile(context, pseudo);
+            return false;
         }
+        return false;
     }
 
     public void createFile(Context context, String pseudo)
@@ -151,13 +156,12 @@ public class ReadFile
         try
         {
             FileOutputStream outputStream = context.openFileOutput(FILENAME, context.MODE_APPEND);
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(outputStream));
-
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
             //REPRENDRE ICI, NOUVELLE LIGNE A CHAQUE PSEUDO
-            bw.write(data);
-            bw.newLine();
 
-            bw.close();
+            outputStreamWriter.append(data);
+            outputStreamWriter.append('\n');
+            outputStreamWriter.close();
             outputStream.close();
         }
         catch (IOException e)
