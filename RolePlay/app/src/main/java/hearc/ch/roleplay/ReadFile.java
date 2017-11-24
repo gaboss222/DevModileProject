@@ -155,14 +155,14 @@ public class ReadFile
     {
         try
         {
+            String newline = "\r\n";
             FileOutputStream outputStream = context.openFileOutput(FILENAME, context.MODE_APPEND);
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
-            //REPRENDRE ICI, NOUVELLE LIGNE A CHAQUE PSEUDO
 
-            outputStreamWriter.append(data);
-            outputStreamWriter.append('\n');
+            outputStreamWriter.write(newline);
+            outputStreamWriter.write(data);
+            outputStreamWriter.flush();
             outputStreamWriter.close();
-            outputStream.close();
         }
         catch (IOException e)
         {
