@@ -4,7 +4,16 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 /**
@@ -20,8 +29,6 @@ public class Player
     private static final String FILENAME=null;
 
 
-
-
     public static boolean add(String pseudo)
     {
         if(list.contains(pseudo))
@@ -35,12 +42,10 @@ public class Player
         }
     }
 
-    public static  ArrayList<String> getlist()
-    {
+    public static  ArrayList<String> getlist() {
         list.add("Salut");
         int listSize = list.size();
-        for(int i=0; i<listSize; i++)
-        {
+        for (int i = 0; i < listSize; i++) {
             Log.i("Member: ", list.get(i));
         }
         return list;

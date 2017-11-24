@@ -47,7 +47,9 @@ public class MenuActivity extends AppCompatActivity {
         @Override
         public void onClick(View v)
         {
-            //On charge une partie
+            Intent intent = new Intent(MenuActivity.this, LoadActivity.class);
+            startActivity(intent);
+
         }
     };
     private View.OnClickListener clickListenerBtnQuitGame = new View.OnClickListener()

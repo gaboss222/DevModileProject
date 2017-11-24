@@ -49,7 +49,7 @@ public class GameActivity extends AppCompatActivity
     {
         reader = new ReadFile();
         textDisplay = (TextView)findViewById(R.id.txtGameDescription);
-
+        textDisplay.setMovementMethod(new ScrollingMovementMethod());
         hNodes = new ArrayList<>();
         buttons = new ArrayList<>();
         actualNode = reader.readNode("A1.txt", this.getApplicationContext());
@@ -64,6 +64,7 @@ public class GameActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 CallLoad(v);
+
             }
         });
         buttons.add(myButton);
