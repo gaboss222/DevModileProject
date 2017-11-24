@@ -12,6 +12,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Random;
+
+import hearc.ch.roleplay.hearc.ch.roleplay.perso.Player;
 
 /**
  * Created by gabriel.griesser on 27.10.2017.
@@ -25,6 +28,7 @@ public class GameActivity extends AppCompatActivity
     ArrayList<Button> buttons;
     ReadFile reader;
     TextView textDisplay;
+    Player
 
     //TODO Créer méthode pour récupérer fichier texte test.txt
     //Puis l'ajouter dans player via une méthode
@@ -59,7 +63,7 @@ public class GameActivity extends AppCompatActivity
         myButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LoadNode(v);
+                CallLoad(v);
             }
         });
         buttons.add(myButton);
@@ -77,28 +81,64 @@ public class GameActivity extends AppCompatActivity
         buttons.clear();
         String firstChar = actualNode.strText.substring(0, 1);
         if(firstChar.equals("*")) {
-                //Fight or Run
+                if(actualNode.strText == "*Fight")
+                {
+                    String strId;
+                    if(actualNode.accessibleNodes.size() == 2)
+                        strId = (String) actualNode.accessibleNodes.keySet().toArray()[FightBinary()];
+                    else
+                        strId = (String) actualNode.accessibleNodes.keySet().toArray()[Fight()];
+                }
+
         }
         else {
-            textDisplay.setText(actualNode.strText);
+            textDisplay.setText(textDisplay.getText() + actualNode.strText);
             if(actualNode.accessibleNodes != null) {
                 for (Map.Entry<String, String> entry : actualNode.accessibleNodes.entrySet()) {
                     CreateButton(entry.getKey(), entry.getValue());
                 }
             }
             else
-            {
-
-            }
+                Death();
         }
     }
 
-    public void LoadNode(View v)
+    public void Death()
+    {
+
+    }
+
+
+    public void CallLoad(View v)
     {
         String strId = v.getTag().toString() + ".txt";
+        LoadNode(strId);
+    }
+
+    public void LoadNode(String strId )
+    {
         hNodes.add(actualNode);
         actualNode = reader.readNode(strId, this.getApplicationContext());
         DisplayNode();
+    }
+
+
+    public int FightBinary()
+    {
+        int iEnnemiPower = hNodes.size() * 3;
+        if(Player.endurance > iEnnemiPower)
+            return 0;
+        return 1;
+    }
+
+    public int Fight()
+    {
+        int iEnnemiPower = hNodes.size() * 3;
+        if(Player.endurance > iEnnemiPower)
+            return 0;
+        if(Player.life - (iEnnemiPower - Player.endurance) > 0)
+            return 1;
+        return 2;
     }
 
 }

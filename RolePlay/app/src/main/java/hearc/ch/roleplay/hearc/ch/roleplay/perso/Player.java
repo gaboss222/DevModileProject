@@ -13,21 +13,16 @@ import java.util.ArrayList;
 
 public class Player
 {
-    private String pseudo;
-    private int endurance;
-    private ArrayList<String> list = new ArrayList<String>();
+    static private String pseudo;
+    static public int endurance = 50;
+    static public int life = 65;
+    static private ArrayList<String> list = new ArrayList<String>();
     private static final String FILENAME=null;
 
-    /*
-    TODO Ajouter méthode pour récupérer le fichier
-     */
-    public Player()
-    {
-
-    }
 
 
-    public boolean add(String pseudo)
+
+    public static boolean add(String pseudo)
     {
         if(list.contains(pseudo))
         {
@@ -40,7 +35,7 @@ public class Player
         }
     }
 
-    public ArrayList<String> getlist()
+    public static  ArrayList<String> getlist()
     {
         list.add("Salut");
         int listSize = list.size();
