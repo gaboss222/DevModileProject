@@ -22,7 +22,7 @@ import java.util.ArrayList;
 
 public class Player
 {
-    static private String pseudo;
+    static public String pseudo;
     static public int endurance = 50;
     static public int life = 65;
     static private ArrayList<String> list = new ArrayList<String>();

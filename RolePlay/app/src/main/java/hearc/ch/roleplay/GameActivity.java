@@ -4,11 +4,14 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -28,7 +31,11 @@ public class GameActivity extends AppCompatActivity
     ArrayList<Button> buttons;
     ReadFile reader;
     TextView textDisplay;
-    Player
+    TextView txtLife;
+    TextView txtEndurance;
+    String strLife = "Life: ";
+    String strEndurance = "Endurance: ";
+    Player p;
 
     //TODO Créer méthode pour récupérer fichier texte test.txt
     //Puis l'ajouter dans player via une méthode
@@ -39,7 +46,6 @@ public class GameActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.game_menu);
-
         Initialisation();
         DisplayNode();
     }
@@ -49,7 +55,11 @@ public class GameActivity extends AppCompatActivity
     {
         reader = new ReadFile();
         textDisplay = (TextView)findViewById(R.id.txtGameDescription);
-        textDisplay.setMovementMethod(new ScrollingMovementMethod());
+        txtEndurance = (TextView)findViewById(R.id.txtEndurance);
+        txtLife = (TextView)findViewById(R.id.txtLife);
+        txtEndurance.setText(strEndurance + String.valueOf(Player.endurance));
+        txtLife.setText(strLife + String.valueOf(Player.life));
+
         hNodes = new ArrayList<>();
         buttons = new ArrayList<>();
         actualNode = reader.readNode("A1.txt", this.getApplicationContext());
@@ -64,7 +74,6 @@ public class GameActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 CallLoad(v);
-
             }
         });
         buttons.add(myButton);
@@ -90,11 +99,16 @@ public class GameActivity extends AppCompatActivity
                     else
                         strId = (String) actualNode.accessibleNodes.keySet().toArray()[Fight()];
                 }
+                if(actualNode.strText.contains("*End"))
+                {
+                    End();
+                }
 
         }
         else {
-            textDisplay.setText(textDisplay.getText() + actualNode.strText);
-            if(actualNode.accessibleNodes != null) {
+            textDisplay.setText(actualNode.strText);
+            if(actualNode.accessibleNodes != null)
+            {
                 for (Map.Entry<String, String> entry : actualNode.accessibleNodes.entrySet()) {
                     CreateButton(entry.getKey(), entry.getValue());
                 }
@@ -106,7 +120,12 @@ public class GameActivity extends AppCompatActivity
 
     public void Death()
     {
+        textDisplay.setText("Vous êtes mort");
+    }
 
+    public void End()
+    {
+        textDisplay.setText("Vous avez fini");
     }
 
 
@@ -138,7 +157,11 @@ public class GameActivity extends AppCompatActivity
         if(Player.endurance > iEnnemiPower)
             return 0;
         if(Player.life - (iEnnemiPower - Player.endurance) > 0)
+        {
+            Player.life = (Player.life - (iEnnemiPower - Player.endurance));
+            txtLife.setText(strLife + String.valueOf(Player.life));
             return 1;
+        }
         return 2;
     }
 

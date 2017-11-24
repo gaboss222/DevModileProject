@@ -2,48 +2,62 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context="hearc.ch.roleplay.GameActivity"
-    android:weightSum="1">
+    android:orientation="vertical"
+    android:weightSum="1"
+    tools:context="hearc.ch.roleplay.GameActivity">
 
     <TextView
         android:id="@+id/txtGameDescription"
         android:layout_width="350dp"
         android:layout_height="290dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="12dp"
         android:layout_weight="0.07"
         android:fontFamily="casual"
         android:maxLines="100"
-        android:scrollbars="vertical"
-        android:text="Description du jeu de role"
         android:textColor="@color/colorPrimaryDark3"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:layout_above="@+id/imageView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="77dp" />
 
     <LinearLayout
-        android:layout_width="170dp"
-        android:layout_height="170dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="15dp"
-        android:orientation="vertical"
         android:id="@+id/buttonLayout"
+        android:layout_width="170dp"
+        android:layout_height="150dp"
+        android:orientation="vertical"
+        android:layout_above="@+id/txtLife"
         android:layout_alignStart="@+id/txtGameDescription"
         android:layout_alignEnd="@+id/txtGameDescription">
-
     </LinearLayout>
+    <TextView
+        android:id="@+id/txtLife"
+        android:layout_width="67dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+        android:text="Life"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/buttonLayout"
+        android:layout_marginStart="31dp" />
+
+    <TextView
+        android:id="@+id/txtEndurance"
+        android:layout_width="68dp"
+        android:layout_height="wrap_content"
+        android:text="Endurance"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/buttonLayout"
+        android:layout_marginEnd="35dp" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="45dp"
         app:srcCompat="@android:drawable/alert_dark_frame"
         android:layout_above="@+id/buttonLayout"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="15dp" />
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>
