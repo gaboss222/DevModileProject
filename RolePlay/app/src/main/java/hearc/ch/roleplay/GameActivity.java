@@ -141,7 +141,8 @@ public class GameActivity extends AppCompatActivity
     public int Fleeing()
     {
         accelerometer.onResume();
-
+            
+        return 0;
     }
 
 
