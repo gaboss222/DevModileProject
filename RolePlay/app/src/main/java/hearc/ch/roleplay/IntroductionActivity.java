@@ -1,26 +1,13 @@
 package hearc.ch.roleplay;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import hearc.ch.roleplay.hearc.ch.roleplay.perso.Player;
 
@@ -74,18 +61,19 @@ public class IntroductionActivity extends AppCompatActivity implements View.OnCl
     {
         if(getPseudoEditText() != null)
         {
-            ReadFile r = new ReadFile();
-            if(r.isNameIsInFile(this, pseudo))
+            FileHandler r = new FileHandler();
+            if(r.isNameIsInFile(this.getApplicationContext(), pseudo))
             {
                 setTextView("Pseudo déjà utilisé");
             }
             else
             {
                 Log.e("isNameIsInFile", "no");
-                Player p = new Player(pseudo);
+                Player.pseudo = pseudo;
                 Intent intent = new Intent(this, GameActivity.class);
                 intent.putExtra("Pseudo", pseudo);
                 startActivity(intent);
+                r.writePlayer(this.getApplicationContext());
             }
         }
         else

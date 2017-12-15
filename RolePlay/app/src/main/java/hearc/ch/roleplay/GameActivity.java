@@ -1,6 +1,5 @@
 package hearc.ch.roleplay;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.Random;
 
 import hearc.ch.roleplay.hearc.ch.roleplay.perso.Player;
 
@@ -24,11 +22,11 @@ public class GameActivity extends AppCompatActivity
 {
 
     HistoryNode actualNode;
-    ArrayList<HistoryNode> hNodes;
+
     ArrayList<Button> buttons;
-    ReadFile reader;
+    FileHandler reader;
     TextView textDisplay;
-    Player
+    Accelerometer accelerometer;
 
     //TODO Créer méthode pour récupérer fichier texte test.txt
     //Puis l'ajouter dans player via une méthode
@@ -39,7 +37,7 @@ public class GameActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.game_menu);
-
+        accelerometer = new Accelerometer();
         Initialisation();
         DisplayNode();
     }
@@ -47,12 +45,20 @@ public class GameActivity extends AppCompatActivity
 
     public void Initialisation()
     {
-        reader = new ReadFile();
+        reader = new FileHandler();
         textDisplay = (TextView)findViewById(R.id.txtGameDescription);
         textDisplay.setMovementMethod(new ScrollingMovementMethod());
-        hNodes = new ArrayList<>();
         buttons = new ArrayList<>();
-        actualNode = reader.readNode("A1.txt", this.getApplicationContext());
+        if(Player.hNodes.size() > 0)
+        {
+            for(String h : Player.hNodes)
+            {
+                actualNode = reader.readNode(h+".txt", this.getApplicationContext());
+                textDisplay.setText(textDisplay.getText()+"\n"+actualNode.strText);
+            }
+        }
+        else
+            actualNode = reader.readNode("A1.txt", this.getApplicationContext());
     }
 
     public void CreateButton(String tag, String val)
@@ -90,6 +96,10 @@ public class GameActivity extends AppCompatActivity
                     else
                         strId = (String) actualNode.accessibleNodes.keySet().toArray()[Fight()];
                 }
+                else if(actualNode.strText == "*Run")
+                {
+
+                }
 
         }
         else {
@@ -109,6 +119,12 @@ public class GameActivity extends AppCompatActivity
 
     }
 
+    public int Fleeing()
+    {
+        accelerometer.onResume();
+
+    }
+
 
     public void CallLoad(View v)
     {
@@ -116,9 +132,9 @@ public class GameActivity extends AppCompatActivity
         LoadNode(strId);
     }
 
-    public void LoadNode(String strId )
+    public void LoadNode(String strId)
     {
-        hNodes.add(actualNode);
+        Player.hNodes.add(strId);
         actualNode = reader.readNode(strId, this.getApplicationContext());
         DisplayNode();
     }
@@ -126,7 +142,7 @@ public class GameActivity extends AppCompatActivity
 
     public int FightBinary()
     {
-        int iEnnemiPower = hNodes.size() * 3;
+        int iEnnemiPower = Player.hNodes.size() * 3;
         if(Player.endurance > iEnnemiPower)
             return 0;
         return 1;
@@ -134,7 +150,7 @@ public class GameActivity extends AppCompatActivity
 
     public int Fight()
     {
-        int iEnnemiPower = hNodes.size() * 3;
+        int iEnnemiPower = Player.hNodes.size() * 3;
         if(Player.endurance > iEnnemiPower)
             return 0;
         if(Player.life - (iEnnemiPower - Player.endurance) > 0)
