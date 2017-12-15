@@ -33,6 +33,7 @@ public class IntroductionActivity extends AppCompatActivity implements View.OnCl
         btnSuivant = (Button)findViewById(R.id.btnSuivant);
         pseudoEditText = (EditText) findViewById(R.id.editPseudo);
         txtLORE = (TextView)findViewById(R.id.txtLORE);
+        txtLORE.setText("Bonjour jeune aventurier, prépare toi à vivre une aventure...");
         btnSuivant.setOnClickListener(this);
     }
 

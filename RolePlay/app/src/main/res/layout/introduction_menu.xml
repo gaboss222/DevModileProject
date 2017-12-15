@@ -29,7 +29,6 @@
         android:layout_marginTop="50dp"
         android:layout_weight="0.10"
         android:fontFamily="casual"
-        android:text="Description du LORE"
         android:textAlignment="textStart"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="36sp"
@@ -59,10 +58,9 @@
 
         <Button
             android:id="@+id/btnSuivant"
-            android:layout_width="124dp"
+            android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_marginTop="2dp"
-            android:layout_weight="0.09"
             android:fontFamily="casual"
             android:text="Commencer"
             android:textColor="@color/colorPrimaryDark3"
