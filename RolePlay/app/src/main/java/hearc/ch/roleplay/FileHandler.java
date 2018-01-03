@@ -41,6 +41,10 @@ public class FileHandler
                         String[] arr = line.split("/");
                         childNodes.put(arr[1], arr[2]);
                     }
+                    else if (firstChar.equals("+"))
+                    {
+
+                    }
                     else
                     {
                         text.append(line);
@@ -50,7 +54,7 @@ public class FileHandler
             }
             br.close() ;
         }catch (IOException e) {
-            text.append("Some shit append");
+            text.append("There has been a problem with read of the file");
         }
         if(childNodes.isEmpty())
         {
@@ -59,34 +63,41 @@ public class FileHandler
         return new HistoryNode(text.toString(), childNodes);
     }
 
-    public boolean fileExists(Context context, String pseudo)
-    {
-        File folder = new File(Environment.getExternalStorageDirectory() +
-                File.separator + "Save");
-        if(!folder.exists())
-            folder.mkdir();
-        File file = new File(Environment.getExternalStorageDirectory() + File.separator + "Save/"+pseudo+".txt");
-        if(file == null || !file.exists())
-        {
-            Log.e("File error", "File doesn't exists");
-            return false;
-        }
-        return true;
-    }
 
     public boolean isNameIsInFile(Context context, String pseudo)
     {
-        if(fileExists(context, pseudo))
-            return true;
-        else
+        File file = new File("/Save/pseudo.txt");
+        if(!file.exists())
         {
-            createFile(context, pseudo);
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            BufferedReader br = null;
+            try {
+                br = new BufferedReader(new InputStreamReader(context.getAssets().open("/Save/pseudo.txt"),"UTF-8"));String line;
+
+                while ((line = br.readLine()) != null) {
+                    if(line == )
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+        }
             return false;
         }
+
+
+        return  true;
+
+
+
     }
 
     public void createFile(Context context, String pseudo) {
-        BufferedWriter bw = null;
         File file = new File(pseudo+".txt");
         try {
             file.createNewFile();
@@ -97,10 +108,12 @@ public class FileHandler
 
     public void writePlayer(Context context)
     {
-        BufferedWriter bw = null;
+        createFile(context, Player.pseudo);
+        File file =
+        FileOutputStream fileOutputStream = new
         try
         {
-            bw = new BufferedWriter(new OutputStreamWriter(context.openFileOutput(Environment.getExternalStorageDirectory() + File.separator +"/Save/"+Player.pseudo+".txt", Context.MODE_PRIVATE)));
+            bw = new BufferedWriter(new InputStream(context.getAssets().open(fileName),"UTF-8"));
 
             bw.write("Life;"+Player.life);
             bw.newLine();
