@@ -27,7 +27,8 @@ public class Player
     static public String pseudo;
     static public int endurance = 50;
     static public int life = 65;
-    static public ArrayList<String> hNodes = new ArrayList<>();
+    static public String actualNodes = "";
+    static public int nbNode = 0;
     static private ArrayList<String> list = new ArrayList<String>();
     private static final String FILENAME=null;
 
