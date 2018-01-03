@@ -63,7 +63,7 @@ public class IntroductionActivity extends AppCompatActivity implements View.OnCl
         if(getPseudoEditText() != null)
         {
             FileHandler r = new FileHandler();
-            if(r.isNameIsInFile(this.getApplicationContext(), pseudo))
+            if(r.isNameInFile(this.getApplicationContext(), pseudo))
             {
                 setTextView("Pseudo déjà utilisé");
             }
@@ -74,7 +74,7 @@ public class IntroductionActivity extends AppCompatActivity implements View.OnCl
                 Intent intent = new Intent(this, GameActivity.class);
                 intent.putExtra("Pseudo", pseudo);
                 startActivity(intent);
-                r.writePlayer(this.getApplicationContext());
+                r.writePlayer(this.getApplicationContext(), pseudo);
             }
         }
         else

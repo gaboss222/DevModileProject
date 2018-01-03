@@ -67,16 +67,11 @@ public class GameActivity extends AppCompatActivity
 
 
         buttons = new ArrayList<>();
-        if(Player.hNodes.size() > 0)
-        {
-            for(String h : Player.hNodes)
-            {
-                actualNode = reader.readNode(h+".txt", this.getApplicationContext());
-                textDisplay.setText(textDisplay.getText()+"\n"+actualNode.strText);
-            }
-        }
+        if(Player.actualNodes != "")
+            actualNode = reader.readNode(Player.actualNodes+".txt", this.getApplicationContext());
         else
             actualNode = reader.readNode("A1.txt", this.getApplicationContext());
+        textDisplay.setText(actualNode.strText);
     }
 
     public void CreateButton(String tag, String val)
@@ -196,7 +191,8 @@ public class GameActivity extends AppCompatActivity
 
     public void LoadNode(String strId)
     {
-        Player.hNodes.add(strId);
+        Player.actualNodes = strId;
+        Player.nbNode++;
         actualNode = reader.readNode(strId, this.getApplicationContext());
         DisplayNode();
     }
@@ -204,7 +200,7 @@ public class GameActivity extends AppCompatActivity
 
     public int FightBinary()
     {
-        int iEnnemiPower = Player.hNodes.size() * 3;
+        int iEnnemiPower = Player.nbNode * 3;
         if(Player.endurance > iEnnemiPower)
             return 0;
         return 1;
@@ -212,7 +208,7 @@ public class GameActivity extends AppCompatActivity
 
     public int Fight()
     {
-        int iEnnemiPower = Player.hNodes.size() * 3;
+        int iEnnemiPower = Player.nbNode * 3;
         if(Player.endurance > iEnnemiPower)
             return 0;
         if(Player.life - (iEnnemiPower - Player.endurance) > 0)

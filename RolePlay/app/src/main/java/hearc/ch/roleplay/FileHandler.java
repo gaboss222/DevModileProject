@@ -63,79 +63,50 @@ public class FileHandler
         return new HistoryNode(text.toString(), childNodes);
     }
 
-
-    public boolean isNameIsInFile(Context context, String pseudo)
+    public boolean isNameInFile(Context context, String pseudo)
     {
-        File file = new File("/Save/pseudo.txt");
-        if(!file.exists())
-        {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            BufferedReader br = null;
-            try {
-                br = new BufferedReader(new InputStreamReader(context.getAssets().open("/Save/pseudo.txt"),"UTF-8"));String line;
-
-                while ((line = br.readLine()) != null) {
-                    if(line == )
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+        String fileName = "SaveName.txt";
+        try
+       {
+           BufferedReader br = new BufferedReader(new InputStreamReader(context.openFileInput(fileName)));
+            String line = "";
+            while((line = br.readLine()) != null){
+                if(line.equals(pseudo))
+                    return false;
             }
 
+           br.close();
+       }
+       catch (IOException e){}
 
-        }
-            return false;
-        }
-
-
-        return  true;
-
-
-
+       try
+       {
+           FileOutputStream fos = context.openFileOutput(fileName,Context.MODE_APPEND);
+           fos.write(pseudo.getBytes());
+           fos.flush();
+           fos.close();
+       }
+       catch (IOException e){}
+       return true;
     }
 
-    public void createFile(Context context, String pseudo) {
-        File file = new File(pseudo+".txt");
-        try {
-            file.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void writePlayer(Context context)
+    public void writePlayer(Context context, String pseudo)
     {
-        createFile(context, Player.pseudo);
-        File file =
-        FileOutputStream fileOutputStream = new
         try
         {
-            bw = new BufferedWriter(new InputStream(context.getAssets().open(fileName),"UTF-8"));
+            FileOutputStream fos = context.openFileOutput(pseudo+".txt",Context.MODE_PRIVATE);
+            fos.write(("Life;"+Player.life).getBytes());
+            fos.write(("Power;"+Player.endurance).getBytes());
+            fos.write(("Chap;" + Player.actualNodes).getBytes());
 
-            bw.write("Life;"+Player.life);
-            bw.newLine();
-            bw.write("Power;"+Player.endurance);
-            bw.newLine();
-            bw.write("Chap;");
-            for(String  h : Player.hNodes)
-                bw.write(h+";");
+            fos.flush();
+            fos.close();
 
         }
         catch (IOException e)
         {
             Log.e("File error", "Error while writing");
             e.printStackTrace();
-        }
-        finally {
-            try {
-                bw.flush();
-                bw.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
