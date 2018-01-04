@@ -55,6 +55,11 @@ public class GameActivity extends AppCompatActivity
         DisplayNode();
     }
 
+    public void Restart()
+    {
+        ClearButtons();
+        Initialisation();
+    }
 
     public void Initialisation()
     {
@@ -91,13 +96,43 @@ public class GameActivity extends AppCompatActivity
         ll.addView(myButton, lp);
     }
 
+    public void CreateEndButton()
+    {
+        Button btnRestart = new Button(this);
+        Button btnQuit = new Button(this);
+        btnRestart.setText("Restart");
+        btnQuit.setText("Menu");
+        btnRestart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Restart();
+            }
+        });
+        btnQuit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-    public void DisplayNode()
+            }
+        });
+        buttons.add(btnRestart);
+        buttons.add(btnQuit);
+        LinearLayout ll = (LinearLayout)findViewById(R.id.buttonLayout);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        ll.addView(btnRestart,lp);
+        ll.addView(btnQuit, lp);
+    }
+
+    public void ClearButtons()
     {
         LinearLayout ll = (LinearLayout)findViewById(R.id.buttonLayout);
         for(Button b : buttons)
             ll.removeView(b);
         buttons.clear();
+    }
+
+    public void DisplayNode()
+    {
+        ClearButtons();
         String firstChar = actualNode.strText.substring(0, 1);
         if(firstChar.equals("*")) {
                 if(actualNode.strText == "*Fight")
@@ -130,12 +165,15 @@ public class GameActivity extends AppCompatActivity
 
     public void Death()
     {
-        textDisplay.setText("Vous êtes mort");
+        textDisplay.setText(textDisplay.getText() + "\n Vous êtes mort");
+        CreateEndButton();
+
     }
 
     public void End()
     {
         textDisplay.setText("Vous avez fini");
+        CreateEndButton();
     }
 
     public int Fleeing()

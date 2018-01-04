@@ -52,6 +52,7 @@ public class FileHandler
                     }
                 }
             }
+
             br.close() ;
         }catch (IOException e) {
             text.append("There has been a problem with read of the file");
@@ -72,7 +73,7 @@ public class FileHandler
             String line = "";
             while((line = br.readLine()) != null){
                 if(line.equals(pseudo))
-                    return false;
+                    return true;
             }
 
            br.close();
@@ -87,7 +88,7 @@ public class FileHandler
            fos.close();
        }
        catch (IOException e){}
-       return true;
+       return false;
     }
 
     public void writePlayer(Context context, String pseudo)
