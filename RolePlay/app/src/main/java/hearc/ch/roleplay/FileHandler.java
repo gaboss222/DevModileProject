@@ -41,6 +41,10 @@ public class FileHandler
                         String[] arr = line.split("/");
                         childNodes.put(arr[1], arr[2]);
                     }
+                    else if (firstChar.equals("+"))
+                    {
+
+                    }
                     else
                     {
                         text.append(line);
@@ -50,7 +54,7 @@ public class FileHandler
             }
             br.close() ;
         }catch (IOException e) {
-            text.append("Some shit append");
+            text.append("There has been a problem with read of the file");
         }
         if(childNodes.isEmpty())
         {
@@ -85,7 +89,6 @@ public class FileHandler
        catch (IOException e){}
        return true;
     }
-
 
     public void writePlayer(Context context, String pseudo)
     {

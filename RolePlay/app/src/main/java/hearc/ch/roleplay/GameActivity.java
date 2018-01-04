@@ -1,12 +1,15 @@
 package hearc.ch.roleplay;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,6 +26,7 @@ import hearc.ch.roleplay.hearc.ch.roleplay.perso.Player;
 
 public class GameActivity extends AppCompatActivity
 {
+
 
     HistoryNode actualNode;
 
@@ -60,6 +64,7 @@ public class GameActivity extends AppCompatActivity
         txtLife = (TextView)findViewById(R.id.txtLife);
         txtEndurance.setText(strEndurance + String.valueOf(Player.endurance));
         txtLife.setText(strLife + String.valueOf(Player.life));
+
 
         buttons = new ArrayList<>();
         if(Player.actualNodes != "")
@@ -136,7 +141,44 @@ public class GameActivity extends AppCompatActivity
     public int Fleeing()
     {
         accelerometer.onResume();
-            
+        int iExit = 0;
+        new CountDownTimer(10000,1000){
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        }.start();
+
+
+
+        accelerometer.onPause();
+        ArrayList<Double> lAcceleration = accelerometer.lAcceleration;
+        ArrayList<Double> lVelocity = new ArrayList<>();
+        ArrayList<Double> lDistance = new ArrayList<>();
+
+
+        for(int i = 0; i < lAcceleration.size(); i++)
+        {
+            if(i == 0)
+            {
+                lVelocity.add(0.0);
+                lDistance.add(0.0);
+            }
+            else
+            {
+                lVelocity.add(lVelocity.get(i-1) + lAcceleration.get(i));
+                lDistance.add(lDistance.get(i-1) + lVelocity.get(i));
+            }
+        }
+        double distance = lDistance.get(lDistance.size()-1);
+        if(distance >= 10)
+            return 1;
         return 0;
     }
 
