@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,67 +7,77 @@
     android:orientation="vertical"
     tools:context="hearc.ch.roleplay.IntroductionActivity">
 
-    <TextView
-        android:id="@+id/txtIntroBienvenue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:fontFamily="casual"
-        android:text="RolePlay"
-        android:layout_marginTop="10dp"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="36sp"
-        android:textStyle="bold"
-        android:typeface="normal" />
-
-    <TextView
-        android:id="@+id/txtLORE"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="50dp"
-        android:layout_weight="0.10"
-        android:fontFamily="casual"
-        android:textAlignment="textStart"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="36sp"
-        android:textStyle="bold" />
-
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_weight="0.02"
-        android:gravity="center_vertical|center_horizontal"
-        android:orientation="horizontal"
-        android:weightSum="1">
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        android:orientation="vertical"
+        tools:context="hearc.ch.roleplay.IntroductionActivity">
 
-        <EditText
-            android:id="@+id/editPseudo"
-            android:layout_width="124dp"
-            android:layout_height="39dp"
-            android:layout_marginRight="50dp"
-            android:layout_weight="0.16"
-            android:background="@android:color/background_light"
-            android:contentDescription="Pseudo"
-            android:inputType="textPersonName"
-            android:textColor="#b47200"
-            android:textSize="21sp" />
-
-        <Button
-            android:id="@+id/btnSuivant"
+        <TextView
+            android:id="@+id/txtIntroBienvenue"
             android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_marginTop="2dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
             android:fontFamily="casual"
-            android:text="Commencer"
-            android:textColor="@color/colorPrimaryDark3"
+            android:text="RolePlay"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            android:typeface="normal" />
+
+        <TextView
+            android:id="@+id/txtLORE"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="50dp"
+            android:layout_weight="0.10"
+            android:fontFamily="casual"
+            android:textAlignment="textStart"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="18sp"
             android:textStyle="bold" />
 
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="0.02"
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <EditText
+                android:id="@+id/editPseudo"
+                android:layout_width="124dp"
+                android:layout_height="39dp"
+                android:layout_marginRight="50dp"
+                android:layout_weight="0.16"
+                android:background="@android:color/background_light"
+                android:contentDescription="Pseudo"
+                android:inputType="textPersonName"
+                android:textColor="#b47200"
+                android:textSize="21sp" />
+
+            <Button
+                android:id="@+id/btnSuivant"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_marginTop="2dp"
+                android:fontFamily="casual"
+                android:text="Commencer"
+                android:textColor="@color/colorPrimaryDark3"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

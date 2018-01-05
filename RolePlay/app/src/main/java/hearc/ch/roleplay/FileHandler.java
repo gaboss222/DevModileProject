@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -95,13 +96,19 @@ public class FileHandler
     {
         try
         {
-            FileOutputStream fos = context.openFileOutput(pseudo+".txt",Context.MODE_PRIVATE);
-            fos.write(("Life;"+Player.life).getBytes());
-            fos.write(("Power;"+Player.endurance).getBytes());
-            fos.write(("Chap;" + Player.actualNodes).getBytes());
+            File folder = new File(context.getFilesDir(), "Save");
+            if(!folder.exists())
+                folder.mkdir();
+            String nameFile = pseudo+".txt";
 
-            fos.flush();
-            fos.close();
+            File saveFile = new File(folder,nameFile);
+            FileWriter writer = new FileWriter(saveFile);
+            writer.append("Life;"+Player.life+"\n");
+            writer.append("Power;"+Player.endurance+"\n");
+            writer.append("Chap;" + Player.actualNodes+"\n");
+
+            writer.flush();
+            writer.close();
 
         }
         catch (IOException e)
@@ -111,5 +118,10 @@ public class FileHandler
         }
     }
 
+    public File[] getSaves(Context context)
+    {
+        File saveFolder = new File(context.getFilesDir(),"Save");
+        return saveFolder.listFiles();
+    }
 
 }
