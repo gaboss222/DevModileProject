@@ -1,5 +1,6 @@
 package hearc.ch.roleplay;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.AdapterView;
@@ -32,7 +33,8 @@ public class LoadActivity extends AppCompatActivity
         lsSave.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+                Intent intent = new Intent(LoadActivity.this, GameActivity.class);
+                startActivity(intent);
             }
         });
         ArrayList<String> saveFiles = new ArrayList<>();

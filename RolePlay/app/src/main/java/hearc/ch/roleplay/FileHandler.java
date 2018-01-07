@@ -3,10 +3,12 @@ package hearc.ch.roleplay;
 import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
+import android.widget.Switch;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -122,6 +124,31 @@ public class FileHandler
     {
         File saveFolder = new File(context.getFilesDir(),"Save");
         return saveFolder.listFiles();
+    }
+
+    public void loadSave(Context context, String strName)
+    {
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(context.openFileInput("./Save/"+strName)));
+            String line ="";
+            while ((line = br.readLine()) != null)
+            {
+                String[] component = line.split(";");
+                switch(component[0])
+                {
+                    case "Life":
+                        break;
+                    case "Power":
+                        break;
+                    case "Chap":
+                        break;
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
