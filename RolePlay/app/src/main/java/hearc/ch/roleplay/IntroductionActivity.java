@@ -71,6 +71,8 @@ public class IntroductionActivity extends AppCompatActivity implements View.OnCl
             {
                 Log.e("isNameIsInFile", "no");
                 Player.pseudo = pseudo;
+                Player.endurance = 50;
+                Player.life = 65;
                 Intent intent = new Intent(this, GameActivity.class);
                 intent.putExtra("Pseudo", pseudo);
                 startActivity(intent);

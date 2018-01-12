@@ -107,6 +107,7 @@ public class FileHandler
             FileWriter writer = new FileWriter(saveFile);
             writer.append("Life;"+Player.life+"\n");
             writer.append("Power;"+Player.endurance+"\n");
+            writer.append("NbChap;"+Player.nbNode+"\n");
             writer.append("Chap;" + Player.actualNodes+"\n");
 
             writer.flush();
@@ -137,10 +138,15 @@ public class FileHandler
                 switch(component[0])
                 {
                     case "Life":
+                        Player.life = Integer.parseInt(component[1]);
                         break;
                     case "Power":
+                        Player.endurance = Integer.parseInt(component[1]);
                         break;
+                    case "NbChap":
+                        Player.nbNode = Integer.parseInt(component[1]);
                     case "Chap":
+                        Player.actualNodes = component[1];
                         break;
                 }
             }
