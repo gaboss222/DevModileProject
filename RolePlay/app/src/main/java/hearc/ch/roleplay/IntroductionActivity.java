@@ -77,7 +77,7 @@ public class IntroductionActivity extends AppCompatActivity implements View.OnCl
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("Pseudo", pseudo);
                 startActivity(intent);
-                r.writePlayer(this.getApplicationContext(), pseudo);
+                r.savePlayer(this.getApplicationContext(), pseudo);
             }
         }
         else

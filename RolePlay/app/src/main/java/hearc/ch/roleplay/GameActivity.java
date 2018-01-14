@@ -3,18 +3,13 @@ package hearc.ch.roleplay;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.Chronometer;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -31,7 +26,8 @@ public class GameActivity extends AppCompatActivity
 
     HistoryNode actualNode;
 
-    ArrayList<Button> buttons;
+    ArrayList<Button> buttonNodes;
+    ArrayList<String> specialNodes;
     FileHandler reader;
     TextView textDisplay;
     Accelerometer accelerometer;
@@ -45,6 +41,8 @@ public class GameActivity extends AppCompatActivity
     //TODO Créer méthode pour récupérer fichier texte test.txt
     //Puis l'ajouter dans player via une méthode
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -55,6 +53,13 @@ public class GameActivity extends AppCompatActivity
         accelerometer = new Accelerometer();
         Initialisation();
         DisplayNode();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.savePlayer(this, Player.pseudo);
     }
 
     public void Restart()
@@ -73,7 +78,8 @@ public class GameActivity extends AppCompatActivity
         txtLife.setText(strLife + String.valueOf(Player.life));
         textDisplay.setMovementMethod(new ScrollingMovementMethod());
 
-        buttons = new ArrayList<>();
+        specialNodes = new ArrayList<>();
+        buttonNodes = new ArrayList<>();
         if(Player.actualNodes != "")
             actualNode = reader.readNode(Player.actualNodes+".txt", this.getApplicationContext());
         else
@@ -81,6 +87,7 @@ public class GameActivity extends AppCompatActivity
         textDisplay.setText(actualNode.strText);
     }
 
+    //Create buttonNodes from nodes
     public void CreateButton(String tag, String val)
     {
         Button myButton = new Button(this);
@@ -92,12 +99,13 @@ public class GameActivity extends AppCompatActivity
                 CallLoad(v);
             }
         });
-        buttons.add(myButton);
+        buttonNodes.add(myButton);
         LinearLayout ll = (LinearLayout)findViewById(R.id.buttonLayout);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         ll.addView(myButton, lp);
     }
 
+    //Create the buttonNodes when the game is over or the player die
     public void CreateEndButton()
     {
         Button btnRestart = new Button(this);
@@ -118,28 +126,30 @@ public class GameActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
-        buttons.add(btnRestart);
-        buttons.add(btnQuit);
+        buttonNodes.add(btnRestart);
+        buttonNodes.add(btnQuit);
         LinearLayout ll = (LinearLayout)findViewById(R.id.buttonLayout);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         ll.addView(btnRestart,lp);
         ll.addView(btnQuit, lp);
     }
 
+    //Remove the buttonNodes
     public void ClearButtons()
     {
         LinearLayout ll = (LinearLayout)findViewById(R.id.buttonLayout);
-        for(Button b : buttons)
+        for(Button b : buttonNodes)
             ll.removeView(b);
-        buttons.clear();
+        buttonNodes.clear();
     }
 
     public void DisplayNode()
     {
+        textDisplay.scrollTo(0,0);
         ClearButtons();
         String firstChar = actualNode.strText.substring(0, 1);
         if(firstChar.equals("*")) {
-                if(actualNode.strText == "*Fight")
+                if(actualNode.strText.contains("*Fight"))
                 {
                     String strId;
                     if(actualNode.accessibleNodes.size() == 2)
@@ -147,10 +157,9 @@ public class GameActivity extends AppCompatActivity
                     else
                         strId = (String) actualNode.accessibleNodes.keySet().toArray()[Fight()];
                 }
-                else if(actualNode.strText == "*Run") {
-                    if (actualNode.strText.contains("*End")) {
-                        End();
-                    }
+                else if(actualNode.strText.contains("*Run")) {
+                    textDisplay.setText("Fuyez pauvre fou !!!");
+                    Fleeing();
                 }
 
         }
@@ -176,60 +185,13 @@ public class GameActivity extends AppCompatActivity
 
     public void End()
     {
-        textDisplay.setText("Vous avez fini");
+        textDisplay.setText("Vous avez fini le jeu, recommencez pour voir ce que les autres chemins de votre histoire vous résèrve.");
         CreateEndButton();
     }
 
-    public int Fleeing()
-    {
-        accelerometer.onResume();
-        int iExit = 0;
-        new CountDownTimer(10000,1000){
+    public void CallLoad(View v){CallLoad(v.getTag().toString());}
 
-            @Override
-            public void onTick(long millisUntilFinished) {
-
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-        }.start();
-
-
-
-        accelerometer.onPause();
-        ArrayList<Double> lAcceleration = accelerometer.lAcceleration;
-        ArrayList<Double> lVelocity = new ArrayList<>();
-        ArrayList<Double> lDistance = new ArrayList<>();
-
-
-        for(int i = 0; i < lAcceleration.size(); i++)
-        {
-            if(i == 0)
-            {
-                lVelocity.add(0.0);
-                lDistance.add(0.0);
-            }
-            else
-            {
-                lVelocity.add(lVelocity.get(i-1) + lAcceleration.get(i));
-                lDistance.add(lDistance.get(i-1) + lVelocity.get(i));
-            }
-        }
-        double distance = lDistance.get(lDistance.size()-1);
-        if(distance >= 10)
-            return 1;
-        return 0;
-    }
-
-
-    public void CallLoad(View v)
-    {
-        String strId = v.getTag().toString() + ".txt";
-        LoadNode(strId);
-    }
+    public void CallLoad(String strId){LoadNode(strId + ".txt");}
 
     public void LoadNode(String strId)
     {
@@ -260,6 +222,53 @@ public class GameActivity extends AppCompatActivity
             return 1;
         }
         return 2;
+    }
+
+    public void Fleeing()
+    {
+        accelerometer.onResume();
+        int iExit = 0;
+        new CountDownTimer(3000,1000){
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                accelerometer.onPause();
+                ComputeFleeingDistance();
+            }
+        }.start();
+    }
+
+    public void ComputeFleeingDistance()
+    {
+
+        ArrayList<Double> lAcceleration = accelerometer.lAcceleration;
+        ArrayList<Double> lVelocity = new ArrayList<>();
+        ArrayList<Double> lDistance = new ArrayList<>();
+
+
+        for(int i = 0; i < lAcceleration.size(); i++)
+        {
+            if(i == 0)
+            {
+                lVelocity.add(0.0);
+                lDistance.add(0.0);
+            }
+            else
+            {
+                lVelocity.add(lVelocity.get(i-1) + lAcceleration.get(i));
+                lDistance.add(lDistance.get(i-1) + lVelocity.get(i));
+            }
+        }
+        double distance = lDistance.get(lDistance.size()-1);
+        if(distance >= 10)
+            CallLoad(actualNode.accessibleNodes.keySet().toArray()[0].toString());
+        else
+            CallLoad(actualNode.accessibleNodes.keySet().toArray()[1].toString());
     }
 
 }

@@ -94,7 +94,7 @@ public class FileHandler
        return false;
     }
 
-    public void writePlayer(Context context, String pseudo)
+    public void savePlayer(Context context, String pseudo)
     {
         try
         {
