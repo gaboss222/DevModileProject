@@ -74,6 +74,7 @@ public class IntroductionActivity extends AppCompatActivity implements View.OnCl
                 Player.endurance = 50;
                 Player.life = 65;
                 Intent intent = new Intent(this, GameActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("Pseudo", pseudo);
                 startActivity(intent);
                 r.writePlayer(this.getApplicationContext(), pseudo);

@@ -1,5 +1,6 @@
 package hearc.ch.roleplay;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.SystemClock;
@@ -49,6 +50,7 @@ public class GameActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         setContentView(R.layout.game_menu);
         accelerometer = new Accelerometer();
         Initialisation();
@@ -69,7 +71,7 @@ public class GameActivity extends AppCompatActivity
         txtLife = (TextView)findViewById(R.id.txtLife);
         txtEndurance.setText(strEndurance + String.valueOf(Player.endurance));
         txtLife.setText(strLife + String.valueOf(Player.life));
-
+        textDisplay.setMovementMethod(new ScrollingMovementMethod());
 
         buttons = new ArrayList<>();
         if(Player.actualNodes != "")
@@ -111,7 +113,9 @@ public class GameActivity extends AppCompatActivity
         btnQuit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         });
         buttons.add(btnRestart);
