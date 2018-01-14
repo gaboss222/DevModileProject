@@ -16,36 +16,28 @@ import java.util.ArrayList;
 import static android.content.Context.SENSOR_SERVICE;
 
 
-public class Accelerometer extends Activity implements SensorEventListener {
-    private Sensor accelerometer;
-    private SensorManager sensorManager;
+public class Accelerometer implements SensorEventListener {
 
+    private final SensorManager mSensorManager;
+    private final Sensor mAccelerometer;
     public ArrayList<Double> lAcceleration;
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
-        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+    public Accelerometer(SensorManager sm){
+        mSensorManager = sm;
+        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
     }
 
-
-    @Override
-    protected void onPause() {
-        sensorManager.unregisterListener(this,accelerometer);
-        super.onPause();
-    }
-
-    @Override
     protected void onResume() {
-        lAcceleration.clear();
-        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI);
-        super.onResume();
+        lAcceleration = new ArrayList<>();
+        mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
-    @Override
+    protected void onPause() {
+        mSensorManager.unregisterListener(this);
+    }
+
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {}
+
     public void onSensorChanged(SensorEvent event) {
         float x = 0.0f;
         float z = 0.0f;
@@ -57,8 +49,4 @@ public class Accelerometer extends Activity implements SensorEventListener {
         }
     }
 
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-    }
 }

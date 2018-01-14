@@ -1,6 +1,7 @@
 package hearc.ch.roleplay;
 
 import android.content.Intent;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
@@ -48,9 +49,8 @@ public class GameActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
+        accelerometer = new Accelerometer((SensorManager)getSystemService(SENSOR_SERVICE));
         setContentView(R.layout.game_menu);
-        accelerometer = new Accelerometer();
         Initialisation();
         DisplayNode();
     }
@@ -231,9 +231,7 @@ public class GameActivity extends AppCompatActivity
         new CountDownTimer(3000,1000){
 
             @Override
-            public void onTick(long millisUntilFinished) {
-
-            }
+            public void onTick(long millisUntilFinished) {}
 
             @Override
             public void onFinish() {
@@ -245,7 +243,6 @@ public class GameActivity extends AppCompatActivity
 
     public void ComputeFleeingDistance()
     {
-
         ArrayList<Double> lAcceleration = accelerometer.lAcceleration;
         ArrayList<Double> lVelocity = new ArrayList<>();
         ArrayList<Double> lDistance = new ArrayList<>();
