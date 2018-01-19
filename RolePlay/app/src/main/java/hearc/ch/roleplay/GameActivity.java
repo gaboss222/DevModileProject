@@ -74,9 +74,8 @@ public class GameActivity extends AppCompatActivity
         textDisplay = (TextView)findViewById(R.id.txtGameDescription);
         txtEndurance = (TextView)findViewById(R.id.txtEndurance);
         txtLife = (TextView)findViewById(R.id.txtLife);
-        txtEndurance.setText(strEndurance + String.valueOf(Player.endurance));
-        txtLife.setText(strLife + String.valueOf(Player.life));
-        textDisplay.setMovementMethod(new ScrollingMovementMethod());
+        setTxt(txtEndurance);
+        setTxt(txtLife);
 
         specialNodes = new ArrayList<>();
         buttonNodes = new ArrayList<>();
@@ -143,6 +142,18 @@ public class GameActivity extends AppCompatActivity
         buttonNodes.clear();
     }
 
+    public void setTxt(TextView t)
+    {
+        if(t == txtEndurance)
+        {
+            txtEndurance.setText(strEndurance + String.valueOf(Player.endurance));
+        }
+        else
+        {
+            txtLife.setText(strLife + String.valueOf(Player.life));
+        }
+    }
+
     public void DisplayNode()
     {
         textDisplay.scrollTo(0,0);
@@ -174,6 +185,8 @@ public class GameActivity extends AppCompatActivity
             else
                 Death();
         }
+        setTxt(txtEndurance);
+        setTxt(txtLife);
     }
 
     public void Death()
