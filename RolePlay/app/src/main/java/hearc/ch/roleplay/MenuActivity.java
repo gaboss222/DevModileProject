@@ -38,7 +38,8 @@ public class MenuActivity extends AppCompatActivity {
         public void onClick(View v)
         {
             //On démarre une nouvelle introduction
-            Intent intent = new Intent(MenuActivity.this, IntroductionActivity.class);
+            Intent intent = new Intent(getApplicationContext(), IntroductionActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }
     };
@@ -48,7 +49,8 @@ public class MenuActivity extends AppCompatActivity {
         @Override
         public void onClick(View v)
         {
-            Intent intent = new Intent(MenuActivity.this, LoadActivity.class);
+            Intent intent = new Intent(getApplicationContext(), LoadActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
 
         }

@@ -1,11 +1,12 @@
-AprÃ¨s avoir bien Ã©tudier la faÃ§ade vous comprenez que votre seule chance est de sauter dans le vide, aprÃ¨s avoir pris une grande inspiration vous vous jetez dans le vide en priant les dieux qui voudraient bien vous entendre de ne pas tomber sur un rocherâ€¦
-Vous vous rÃ©veillez en sentant une tension sur le col de votre chemise, vous vous faÃ®tes trainer, un sac sur la tÃªte, vous reconnaissez sous vos pieds des blanches de bois, on vous force Ã  vous mettre Ã  genoux et vous entendez une voix.
-???  : â€“ Je veux voir ces yeux dÃ©pÃªchez-vous.
++Life15
+Après avoir bien étudier la façade vous comprenez que votre seule chance est de sauter dans le vide, après avoir pris une grande inspiration vous vous laissé tomber en priant les dieux qui voudraient bien vous entendre de ne pas tomber sur un rocher…
+Vous vous réveillez en sentant une tension sur le col de votre chemise, vous vous faîtes trainer, un sac sur la tête, vous reconnaissez sous vos pieds des blanches de bois, on vous force à vous mettre à genoux et vous entendez une voix.
+???  : – Je veux voir ces yeux dépêchez-vous.
 
-Le jour soudain vous brÃ»la les yeux, aprÃ¨s quelque seconde vous arrivez enfin Ã  les ouvrirent, vous faites face Ã  une dizaine de matelots, possÃ©dant tous une peau bronzÃ©, armÃ©e de sabre quâ€™Ã©trangement vous reconnaissez comme les lames courbes des hommes du sud. 
-Lâ€™un des hommes qui semblait Ãªtre le chef sur ce navire, vous regarde froidement.
-Capitaine du navire : â€“ Il est contaminÃ©â€¦. TuÃ© le ! 
+Le jour soudain vous brûla les yeux, après quelque seconde vous arrivez enfin à les ouvrirent, vous faites face à une dizaine de matelots, possédant tous une peau bronzé, armée de sabre qu’étrangement vous reconnaissez comme les lames courbes des hommes du sud. 
+L’un des hommes qui semblait être le chef sur ce navire, vous regarde froidement.
+Capitaine du navire : – Il est contaminé…. Tué le ! 
 
-/A4/ -Touche moi sale chien et câ€™est la derniÃ¨re chose que tu feras !
+/A4/ -Touche moi sale chien et c’est la dernière chose que tu feras !
 /E1/ Tentez de fuir en vous jetant par-dessus bords !
 /C1/ Vous vous jetez sur le capitaine ! 

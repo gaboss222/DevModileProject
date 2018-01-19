@@ -26,6 +26,10 @@ import hearc.ch.roleplay.hearc.ch.roleplay.perso.Player;
 
 public class FileHandler
 {
+
+    private String endurance = "Endurance";
+    private String life = "Life";
+
     public FileHandler(){}
 
 
@@ -46,7 +50,14 @@ public class FileHandler
                     }
                     else if (firstChar.equals("+"))
                     {
-
+                        if(line.contains("Endurance"))
+                        {
+                            Player.endurance += Integer.parseInt(line.substring(endurance.length() + 1, line.length()));
+                        }
+                        else if(line.contains("Life"))
+                        {
+                            Player.life += Integer.parseInt(line.substring(life.length() + 1, line.length()));
+                        }
                     }
                     else
                     {
@@ -94,7 +105,7 @@ public class FileHandler
        return false;
     }
 
-    public void writePlayer(Context context, String pseudo)
+    public void savePlayer(Context context, String pseudo)
     {
         try
         {

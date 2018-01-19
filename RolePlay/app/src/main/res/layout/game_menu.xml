@@ -13,42 +13,44 @@
         android:id="@+id/txtGameDescription"
         android:layout_width="350dp"
         android:layout_height="290dp"
+        android:layout_centerHorizontal="true"
         android:layout_weight="0.07"
         android:fontFamily="casual"
         android:maxLines="100"
         android:textColor="@color/colorPrimaryDark3"
-        android:textSize="18sp"
-        android:layout_above="@+id/imageView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="77dp" />
+        android:textSize="18sp" />
 
     <LinearLayout
         android:id="@+id/buttonLayout"
         android:layout_width="170dp"
         android:layout_height="150dp"
-        android:orientation="vertical"
         android:layout_above="@+id/txtLife"
+        android:layout_alignEnd="@+id/txtGameDescription"
         android:layout_alignStart="@+id/txtGameDescription"
-        android:layout_alignEnd="@+id/txtGameDescription">
-    </LinearLayout>
+        android:layout_marginBottom="30dp"
+        android:orientation="vertical"></LinearLayout>
+
     <TextView
         android:id="@+id/txtLife"
         android:layout_width="67dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="100dp"
-        android:text="Life"
+        android:textColor="@android:color/holo_orange_dark"
+        android:layout_height="20dp"
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/buttonLayout"
-        android:layout_marginStart="31dp" />
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="35dp"
+        android:text="Life" />
 
     <TextView
         android:id="@+id/txtEndurance"
-        android:layout_width="68dp"
-        android:layout_height="wrap_content"
-        android:text="Endurance"
-        android:layout_alignParentBottom="true"
+        android:layout_width="100dp"
+        android:layout_height="20dp"
         android:layout_alignEnd="@+id/buttonLayout"
-        android:layout_marginEnd="35dp" />
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="35dp"
+        android:text="Endurance"
+        android:textColor="@android:color/holo_orange_dark" />
 
     <ImageView
         android:id="@+id/imageView"
