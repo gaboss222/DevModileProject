@@ -51,7 +51,6 @@ public class GameActivity extends AppCompatActivity
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         accelerometer = new Accelerometer((SensorManager)getSystemService(SENSOR_SERVICE));
         setContentView(R.layout.game_menu);
-        accelerometer = new Accelerometer();
         Initialization();
         DisplayNode();
     }
@@ -77,6 +76,7 @@ public class GameActivity extends AppCompatActivity
         txtLife = (TextView)findViewById(R.id.txtLife);
         setTxt(txtEndurance);
         setTxt(txtLife);
+
 
         specialNodes = new ArrayList<>();
         buttonNodes = new ArrayList<>();
