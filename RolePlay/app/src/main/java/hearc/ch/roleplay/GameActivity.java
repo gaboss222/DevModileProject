@@ -2,18 +2,12 @@ package hearc.ch.roleplay;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
-import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.Chronometer;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -51,17 +45,17 @@ public class GameActivity extends AppCompatActivity
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.game_menu);
         accelerometer = new Accelerometer();
-        Initialisation();
+        Initialization();
         DisplayNode();
     }
 
     public void Restart()
     {
         ClearButtons();
-        Initialisation();
+        Initialization();
     }
 
-    public void Initialisation()
+    public void Initialization()
     {
         reader = new FileHandler();
         textDisplay = (TextView)findViewById(R.id.txtGameDescription);
