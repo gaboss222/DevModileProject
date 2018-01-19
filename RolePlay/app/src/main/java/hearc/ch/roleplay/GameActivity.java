@@ -1,5 +1,6 @@
 package hearc.ch.roleplay;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.hardware.SensorManager;
 import android.os.Bundle;
@@ -41,6 +42,9 @@ public class GameActivity extends AppCompatActivity
     String strEndurance = "Endurance: ";
     Player p;
 
+    final int iTimeFleeing = 3;
+    final double dblDistanceFleeing = 15;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -53,7 +57,7 @@ public class GameActivity extends AppCompatActivity
         txtEndurance = (TextView)findViewById(R.id.txtEndurance);
         txtLife = (TextView)findViewById(R.id.txtLife);
         imageView = (ImageView)findViewById(R.id.imageView);
-        Initialisation();
+        Initialization();
         DisplayNode();
     }
 
@@ -156,12 +160,14 @@ public class GameActivity extends AppCompatActivity
 
     public void DisplayNode()
     {
+        imageView.setImageResource(0);
         textDisplay.scrollTo(0,0);
         ClearButtons();
         String firstChar = actualNode.strText.substring(0, 1);
         if(firstChar.equals("*")) {
                 if(actualNode.strText.contains("*Fight"))
                 {
+                    imageView.setImageResource(R.drawable.fight);
                     String strId;
                     if(actualNode.accessibleNodes.size() == 2)
                         strId = (String) actualNode.accessibleNodes.keySet().toArray()[FightBinary()];
@@ -190,13 +196,9 @@ public class GameActivity extends AppCompatActivity
         setTxt(txtEndurance);
         setTxt(txtLife);
         if(reader.isAttributeChanged() == 2)
-        {
             imageView.setImageResource(R.drawable.lifepotion);
-        }
         else if(reader.isAttributeChanged() == 1)
-        {
-
-        }
+            imageView.setImageResource(R.drawable.endurancepotion);
     }
 
     public void Death()
@@ -251,7 +253,7 @@ public class GameActivity extends AppCompatActivity
     {
         accelerometer.onResume();
         int iExit = 0;
-        new CountDownTimer(3000,1000){
+        new CountDownTimer(iTimeFleeing*1000,1000){
 
             @Override
             public void onTick(long millisUntilFinished) {}
@@ -270,8 +272,13 @@ public class GameActivity extends AppCompatActivity
         ArrayList<Double> lVelocity = new ArrayList<>();
         ArrayList<Double> lDistance = new ArrayList<>();
 
+        double accelerationSum = 0.0;
+        for(Double acc : lAcceleration)
+            accelerationSum += acc;
 
-        for(int i = 0; i < lAcceleration.size(); i++)
+        double accelerationAvg = accelerationSum / lAcceleration.size();
+
+        for(int i = 0; i <= iTimeFleeing; i++)
         {
             if(i == 0)
             {
@@ -280,12 +287,13 @@ public class GameActivity extends AppCompatActivity
             }
             else
             {
-                lVelocity.add(lVelocity.get(i-1) + lAcceleration.get(i));
+                lVelocity.add(lVelocity.get(i-1) + accelerationAvg);
                 lDistance.add(lDistance.get(i-1) + lVelocity.get(i));
             }
         }
         double distance = lDistance.get(lDistance.size()-1);
-        if(distance >= 10)
+
+        if(distance >= dblDistanceFleeing)
             CallLoad(actualNode.accessibleNodes.keySet().toArray()[0].toString());
         else
             CallLoad(actualNode.accessibleNodes.keySet().toArray()[1].toString());

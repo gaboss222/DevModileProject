@@ -39,14 +39,23 @@ public class Accelerometer implements SensorEventListener {
     public void onAccuracyChanged(Sensor sensor, int accuracy) {}
 
     public void onSensorChanged(SensorEvent event) {
-        float x = 0.0f;
-        float z = 0.0f;
+        double x = 0.0f;
+        double z = 0.0f;
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
-            x = event.values[0];
-            z = event.values[2];
 
-            lAcceleration.add(Math.sqrt(Math.pow(x,2)+Math.pow(z,2)));
+            final double alpha = 0.8;
+            double[] gravity = new double[2];
+
+            gravity[0] = alpha * gravity[0] + (1 - alpha) * event.values[0];
+            gravity[1] = alpha * gravity[1] + (1 - alpha) * event.values[1];
+
+            x = event.values[0] - gravity[0];
+            z = event.values[1] - gravity[1];
+
+            double acc = Math.sqrt(Math.pow(x,2)+Math.pow(z,2));
+            lAcceleration.add(acc);
         }
     }
+
 
 }
