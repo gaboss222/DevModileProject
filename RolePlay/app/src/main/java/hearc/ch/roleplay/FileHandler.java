@@ -1,8 +1,10 @@
 package hearc.ch.roleplay;
 
 import android.content.Context;
+import android.media.Image;
 import android.os.Environment;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.Switch;
 
 import java.io.BufferedReader;
@@ -29,13 +31,18 @@ public class FileHandler
 
     private String endurance = "Endurance";
     private String life = "Life";
+    private int attributeChanged = 0;
 
-    public FileHandler(){}
+
+
+    public FileHandler(){
+    }
 
 
     public HistoryNode readNode(String fileName, Context context)
     {
         HashMap<String,String> childNodes = new HashMap<>();
+        attributeChanged = 0;
         StringBuilder text = new StringBuilder();
         try {
 
@@ -53,10 +60,12 @@ public class FileHandler
                         if(line.contains("Endurance"))
                         {
                             Player.endurance += Integer.parseInt(line.substring(endurance.length() + 1, line.length()));
+                            attributeChanged = 1;
                         }
                         else if(line.contains("Life"))
                         {
                             Player.life += Integer.parseInt(line.substring(life.length() + 1, line.length()));
+                            attributeChanged = 2;
                         }
                     }
                     else
@@ -76,6 +85,11 @@ public class FileHandler
             childNodes = null;
         }
         return new HistoryNode(text.toString(), childNodes);
+    }
+
+    public int isAttributeChanged()
+    {
+        return attributeChanged;
     }
 
     public boolean isNameInFile(Context context, String pseudo)

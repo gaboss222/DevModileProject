@@ -9,6 +9,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -32,17 +33,13 @@ public class GameActivity extends AppCompatActivity
     FileHandler reader;
     TextView textDisplay;
     Accelerometer accelerometer;
+    ImageView imageView;
 
     TextView txtLife;
     TextView txtEndurance;
     String strLife = "Life: ";
     String strEndurance = "Endurance: ";
     Player p;
-
-    //TODO Créer méthode pour récupérer fichier texte test.txt
-    //Puis l'ajouter dans player via une méthode
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -51,7 +48,12 @@ public class GameActivity extends AppCompatActivity
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         accelerometer = new Accelerometer((SensorManager)getSystemService(SENSOR_SERVICE));
         setContentView(R.layout.game_menu);
-        Initialization();
+		
+        textDisplay = (TextView)findViewById(R.id.txtGameDescription);
+        txtEndurance = (TextView)findViewById(R.id.txtEndurance);
+        txtLife = (TextView)findViewById(R.id.txtLife);
+        imageView = (ImageView)findViewById(R.id.imageView);
+        Initialisation();
         DisplayNode();
     }
 
@@ -71,13 +73,10 @@ public class GameActivity extends AppCompatActivity
     public void Initialization()
     {
         reader = new FileHandler();
-        textDisplay = (TextView)findViewById(R.id.txtGameDescription);
-        txtEndurance = (TextView)findViewById(R.id.txtEndurance);
-        txtLife = (TextView)findViewById(R.id.txtLife);
+
         setTxt(txtEndurance);
         setTxt(txtLife);
-
-
+        textDisplay.setMovementMethod(new ScrollingMovementMethod());
         specialNodes = new ArrayList<>();
         buttonNodes = new ArrayList<>();
         if(Player.actualNodes != "")
@@ -168,6 +167,8 @@ public class GameActivity extends AppCompatActivity
                         strId = (String) actualNode.accessibleNodes.keySet().toArray()[FightBinary()];
                     else
                         strId = (String) actualNode.accessibleNodes.keySet().toArray()[Fight()];
+
+                    CallLoad(strId);
                 }
                 else if(actualNode.strText.contains("*Run")) {
                     textDisplay.setText("Fuyez pauvre fou !!!");
@@ -188,6 +189,14 @@ public class GameActivity extends AppCompatActivity
         }
         setTxt(txtEndurance);
         setTxt(txtLife);
+        if(reader.isAttributeChanged() == 2)
+        {
+            imageView.setImageResource(R.drawable.lifepotion);
+        }
+        else if(reader.isAttributeChanged() == 1)
+        {
+
+        }
     }
 
     public void Death()
