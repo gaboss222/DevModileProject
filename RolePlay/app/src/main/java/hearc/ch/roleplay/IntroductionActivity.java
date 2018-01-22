@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -29,7 +30,7 @@ public class IntroductionActivity extends AppCompatActivity implements View.OnCl
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.introduction_menu);
-
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         btnSuivant = (Button)findViewById(R.id.btnSuivant);
         pseudoEditText = (EditText) findViewById(R.id.editPseudo);
         txtLORE = (TextView)findViewById(R.id.txtLORE);

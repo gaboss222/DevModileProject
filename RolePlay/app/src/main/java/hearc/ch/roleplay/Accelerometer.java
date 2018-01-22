@@ -42,6 +42,10 @@ public class Accelerometer implements SensorEventListener {
         double x = 0.0f;
         double z = 0.0f;
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
+           /* x = event.values[0];
+            z = event.values[2];
+
+            lAcceleration.add(Math.sqrt(Math.pow(x,2)+Math.pow(z,2)));*/
 
             final double alpha = 0.8;
             double[] gravity = new double[2];
@@ -56,6 +60,5 @@ public class Accelerometer implements SensorEventListener {
             lAcceleration.add(acc);
         }
     }
-
 
 }
