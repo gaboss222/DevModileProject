@@ -42,7 +42,7 @@
         <LinearLayout
             android:id="@+id/buttonLayout"
             android:layout_width="match_parent"
-            android:layout_height="145dp"
+            android:layout_height="175dp"
             android:layout_above="@+id/txtLife"
             android:layout_alignEnd="@+id/txtGameDescription"
             android:layout_alignStart="@+id/txtGameDescription"

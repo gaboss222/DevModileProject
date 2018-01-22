@@ -78,6 +78,7 @@ public class FileHandler
 
             br.close() ;
         }catch (IOException e) {
+            Log.e("FileHandlerError", e.getMessage());
             text.append("There has been a problem with read of the file");
         }
         if(childNodes.isEmpty())

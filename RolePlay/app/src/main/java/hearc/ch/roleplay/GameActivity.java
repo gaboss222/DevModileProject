@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -69,22 +70,30 @@ public class GameActivity extends AppCompatActivity
     public void Restart()
     {
         ClearButtons();
+        //J'ai tenté de mettre actualNode à A1.txt mais rien n'y fait, c'est toujours D1
+        actualNode = reader.readNode("A1.txt", this.getApplicationContext());
         Initialization();
     }
 
     public void Initialization()
     {
         reader = new FileHandler();
-
+        Player.actualNodes = "";
         setTxt(txtEndurance);
         setTxt(txtLife);
         textDisplay.setMovementMethod(new ScrollingMovementMethod());
         specialNodes = new ArrayList<>();
         buttonNodes = new ArrayList<>();
+
+        //Il ne charge pas bien actualNode --> Pas d'enfants donc pas de boutons si on meurt !
         if(Player.actualNodes != "")
-            actualNode = reader.readNode(Player.actualNodes+".txt", this.getApplicationContext());
+        {
+            actualNode = reader.readNode(Player.actualNodes + ".txt", this.getApplicationContext());
+        }
         else
+        {
             actualNode = reader.readNode("A1.txt", this.getApplicationContext());
+        }
         textDisplay.setText(actualNode.strText);
     }
 
@@ -162,10 +171,10 @@ public class GameActivity extends AppCompatActivity
         textDisplay.scrollTo(0,0);
         ClearButtons();
         String firstChar = actualNode.strText.substring(0, 1);
-        if(firstChar.equals("*")) {
+        if(firstChar.equals("*"))
+        {
                 if(actualNode.strText.contains("*Fight"))
                 {
-                    imageView.setImageResource(R.drawable.fight);
                     String strId;
                     if(actualNode.accessibleNodes.size() == 2)
                         strId = (String) actualNode.accessibleNodes.keySet().toArray()[FightBinary()];
@@ -180,8 +189,10 @@ public class GameActivity extends AppCompatActivity
                 }
 
         }
-        else {
-            textDisplay.setText(actualNode.strText);
+        else
+        {
+            //textDisplay.setText(actualNode.strText);
+            //ICI --> actualNode.accessibleNodes = null !!
             if(actualNode.accessibleNodes != null)
             {
                 for (Map.Entry<String, String> entry : actualNode.accessibleNodes.entrySet()) {
@@ -193,8 +204,11 @@ public class GameActivity extends AppCompatActivity
         }
         setTxt(txtEndurance);
         setTxt(txtLife);
-        if(reader.isAttributeChanged() == 2)
+        if(reader.isAttributeChanged() == 1)
             imageView.setImageResource(R.drawable.endurancepotion);
+        else if(reader.isAttributeChanged() == 2)
+            imageView.setImageResource(R.drawable.lifepotion);
+
         /*{
             imageView.setImageResource(R.drawable.lifepotion);
         }
@@ -219,7 +233,10 @@ public class GameActivity extends AppCompatActivity
 
     public void CallLoad(View v){CallLoad(v.getTag().toString());}
 
-    public void CallLoad(String strId){LoadNode(strId + ".txt");}
+    public void CallLoad(String strId)
+    {
+        LoadNode(strId);
+    }
 
     public void LoadNode(String strId)
     {
