@@ -1,3 +1,4 @@
-Vous décidez de vous faire le tour de la pièce.
+﻿Vous vous réveillez dans un endroit sombre et décidez de faire le tour de la pièce.
+Seulement, une immense porte en fer se tient devant vous, que faisez-vous ?
 /A2/ S’approcher de la porte en fer.
-/D1/ Regarder dans le fond de la salle.
+/D1/ Regarder dans le fond de la pièce.

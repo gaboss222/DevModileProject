@@ -41,7 +41,6 @@ public class GameActivity extends AppCompatActivity
     String strLife = "Life: ";
     String strEndurance = "Endurance: ";
     Player p;
-
     final int iTimeFleeing = 3;
     final double dblDistanceFleeing = 15;
 
@@ -52,7 +51,6 @@ public class GameActivity extends AppCompatActivity
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         accelerometer = new Accelerometer((SensorManager)getSystemService(SENSOR_SERVICE));
         setContentView(R.layout.game_menu);
-		
         textDisplay = (TextView)findViewById(R.id.txtGameDescription);
         txtEndurance = (TextView)findViewById(R.id.txtEndurance);
         txtLife = (TextView)findViewById(R.id.txtLife);
@@ -196,9 +194,14 @@ public class GameActivity extends AppCompatActivity
         setTxt(txtEndurance);
         setTxt(txtLife);
         if(reader.isAttributeChanged() == 2)
-            imageView.setImageResource(R.drawable.lifepotion);
-        else if(reader.isAttributeChanged() == 1)
             imageView.setImageResource(R.drawable.endurancepotion);
+        /*{
+            imageView.setImageResource(R.drawable.lifepotion);
+        }
+        else if(reader.isAttributeChanged() == 1)
+        {
+
+        }*/
     }
 
     public void Death()
@@ -276,8 +279,8 @@ public class GameActivity extends AppCompatActivity
         for(Double acc : lAcceleration)
             accelerationSum += acc;
 
-        double accelerationAvg = accelerationSum / lAcceleration.size();
 
+        double accelerationAvg = accelerationSum / lAcceleration.size();
         for(int i = 0; i <= iTimeFleeing; i++)
         {
             if(i == 0)
@@ -292,7 +295,6 @@ public class GameActivity extends AppCompatActivity
             }
         }
         double distance = lDistance.get(lDistance.size()-1);
-
         if(distance >= dblDistanceFleeing)
             CallLoad(actualNode.accessibleNodes.keySet().toArray()[0].toString());
         else

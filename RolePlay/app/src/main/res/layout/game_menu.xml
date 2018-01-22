@@ -9,59 +9,83 @@
     android:weightSum="1"
     tools:context="hearc.ch.roleplay.GameActivity">
 
-    <TextView
-        android:id="@+id/txtGameDescription"
-        android:layout_width="350dp"
-        android:layout_height="290dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
-        android:layout_weight="0.07"
-        android:fontFamily="casual"
-        android:maxLines="100"
-        android:textColor="@color/colorPrimaryDark3"
-        android:textSize="18sp" />
+    <LinearLayout
+        android:id="@+id/ComponentLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="30dp">
+
+        <TextView
+            android:id="@+id/txtGameDescription"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="0.07"
+            android:fontFamily="casual"
+            android:maxLines="100"
+            android:textColor="@color/colorPrimaryDark3"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtGameDescription"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="33dp"
+            app:srcCompat="@android:drawable/alert_dark_frame" />
+
+        <LinearLayout
+            android:id="@+id/buttonLayout"
+            android:layout_width="match_parent"
+            android:layout_height="145dp"
+            android:layout_above="@+id/txtLife"
+            android:layout_alignEnd="@+id/txtGameDescription"
+            android:layout_alignStart="@+id/txtGameDescription"
+            android:layout_gravity="center|center_vertical"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="30dp"
+            android:orientation="vertical">
+
+        </LinearLayout>
+    </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/buttonLayout"
-        android:layout_width="170dp"
-        android:layout_height="150dp"
-        android:layout_above="@+id/txtLife"
-        android:layout_alignEnd="@+id/txtGameDescription"
-        android:layout_alignStart="@+id/txtGameDescription"
-        android:layout_marginBottom="30dp"
-        android:orientation="vertical"></LinearLayout>
-
-    <TextView
-        android:id="@+id/txtLife"
-        android:layout_width="67dp"
-        android:textColor="@android:color/holo_orange_dark"
-        android:layout_height="20dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/buttonLayout"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="35dp"
-        android:text="Life" />
-
-    <TextView
-        android:id="@+id/txtEndurance"
-        android:layout_width="100dp"
-        android:layout_height="20dp"
-        android:layout_alignEnd="@+id/buttonLayout"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp"
-        android:layout_marginEnd="35dp"
-        android:text="Endurance"
-        android:textColor="@android:color/holo_orange_dark" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
+        android:id="@+id/AttributeLinearLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txtGameDescription"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="33dp"
-        app:srcCompat="@android:drawable/alert_dark_frame" />
+        android:layout_marginTop="10dp"
+        android:gravity="center|bottom"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/txtLife"
+            android:layout_width="67dp"
+            android:layout_height="20dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/buttonLayout"
+            android:layout_weight="0"
+            android:text="Life"
+            android:textColor="@android:color/holo_orange_dark" />
+
+        <TextView
+            android:id="@+id/txtEndurance"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_alignEnd="@+id/buttonLayout"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="75dp"
+            android:layout_weight="0"
+            android:text="Endurance"
+            android:textColor="@android:color/holo_orange_dark" />
+    </LinearLayout>
 
 
 </RelativeLayout>
