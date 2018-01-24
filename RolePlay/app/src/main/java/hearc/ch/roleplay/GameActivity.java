@@ -87,14 +87,11 @@ public class GameActivity extends AppCompatActivity
 
         //Il ne charge pas bien actualNode --> Pas d'enfants donc pas de boutons si on meurt !
         if(Player.actualNodes != "")
-        {
             actualNode = reader.readNode(Player.actualNodes + ".txt", this.getApplicationContext());
-        }
         else
-        {
             actualNode = reader.readNode("A1.txt", this.getApplicationContext());
-        }
-        textDisplay.setText(actualNode.strText);
+
+        DisplayNode();
     }
 
     //Create buttonNodes from nodes
@@ -191,7 +188,7 @@ public class GameActivity extends AppCompatActivity
         }
         else
         {
-            //textDisplay.setText(actualNode.strText);
+            textDisplay.setText(actualNode.strText);
             //ICI --> actualNode.accessibleNodes = null !!
             if(actualNode.accessibleNodes != null)
             {
@@ -235,7 +232,7 @@ public class GameActivity extends AppCompatActivity
 
     public void CallLoad(String strId)
     {
-        LoadNode(strId);
+        LoadNode(strId + ".txt");
     }
 
     public void LoadNode(String strId)
