@@ -63,21 +63,23 @@ public class GameActivity extends AppCompatActivity
     @Override
     protected void onPause() {
         super.onPause();
-        FileHandler fileHandler = new FileHandler();
-        fileHandler.savePlayer(this, Player.pseudo);
+        Player.actualNodes = actualNode.strId;
+        FileHandler fileHandler = new FileHandler(this.getApplicationContext());
+        fileHandler.savePlayer();
     }
+
 
     public void Restart()
     {
         ClearButtons();
         //J'ai tenté de mettre actualNode à A1.txt mais rien n'y fait, c'est toujours D1
-        actualNode = reader.readNode("A1.txt", this.getApplicationContext());
+        actualNode = reader.readNode("A1.txt");
         Initialization();
     }
 
     public void Initialization()
     {
-        reader = new FileHandler();
+        reader = new FileHandler(this);
         Player.actualNodes = "";
         setTxt(txtEndurance);
         setTxt(txtLife);
@@ -86,9 +88,9 @@ public class GameActivity extends AppCompatActivity
         buttonNodes = new ArrayList<>();
 
         if(Player.actualNodes != "")
-            actualNode = reader.readNode(Player.actualNodes + ".txt", this.getApplicationContext());
+            actualNode = reader.readNode(Player.actualNodes + ".txt");
         else
-            actualNode = reader.readNode("A1.txt", this.getApplicationContext());
+            actualNode = reader.readNode("A1.txt");
 
         DisplayNode();
     }
@@ -217,7 +219,7 @@ public class GameActivity extends AppCompatActivity
     {
         Player.actualNodes = strId;
         Player.nbNode++;
-        actualNode = reader.readNode(strId, this.getApplicationContext());
+        actualNode = reader.readNode(strId);
         DisplayNode();
     }
 
