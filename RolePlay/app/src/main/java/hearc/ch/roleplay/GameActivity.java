@@ -41,7 +41,7 @@ public class GameActivity extends AppCompatActivity
     TextView txtEndurance;
     String strLife = "Life: ";
     String strEndurance = "Endurance: ";
-    Player p;
+
     final int iTimeFleeing = 3;
     final double dblDistanceFleeing = 15;
 
@@ -205,18 +205,6 @@ public class GameActivity extends AppCompatActivity
 
     }
 
-    public void Death()
-    {
-        textDisplay.setText(textDisplay.getText() + "\n Vous êtes mort");
-        CreateEndButton();
-
-    }
-
-    public void End()
-    {
-        textDisplay.setText("Vous avez fini le jeu, recommencez pour voir ce que les autres chemins de votre histoire vous résèrve.");
-        CreateEndButton();
-    }
 
     public void CallLoad(View v){CallLoad(v.getTag().toString());}
 
@@ -233,6 +221,19 @@ public class GameActivity extends AppCompatActivity
         DisplayNode();
     }
 
+
+    public void Death()
+    {
+        textDisplay.setText(textDisplay.getText() + "\n Vous êtes mort");
+        CreateEndButton();
+
+    }
+
+    public void End()
+    {
+        textDisplay.setText("Vous avez fini le jeu, recommencez pour voir ce que les autres chemins de votre histoire vous résèrve.");
+        CreateEndButton();
+    }
 
     public int FightBinary()
     {
@@ -258,6 +259,7 @@ public class GameActivity extends AppCompatActivity
 
     public void Fleeing()
     {
+        textDisplay.setText("Courrez aussi vite que vous le pouvez !");
         accelerometer.onResume();
         int iExit = 0;
         new CountDownTimer(iTimeFleeing*1000,1000){
