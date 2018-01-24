@@ -85,7 +85,6 @@ public class GameActivity extends AppCompatActivity
         specialNodes = new ArrayList<>();
         buttonNodes = new ArrayList<>();
 
-        //Il ne charge pas bien actualNode --> Pas d'enfants donc pas de boutons si on meurt !
         if(Player.actualNodes != "")
             actualNode = reader.readNode(Player.actualNodes + ".txt", this.getApplicationContext());
         else
@@ -153,13 +152,9 @@ public class GameActivity extends AppCompatActivity
     public void setTxt(TextView t)
     {
         if(t == txtEndurance)
-        {
             txtEndurance.setText(strEndurance + String.valueOf(Player.endurance));
-        }
         else
-        {
             txtLife.setText(strLife + String.valueOf(Player.life));
-        }
     }
 
     public void DisplayNode()
@@ -181,15 +176,17 @@ public class GameActivity extends AppCompatActivity
                     CallLoad(strId);
                 }
                 else if(actualNode.strText.contains("*Run")) {
-                    textDisplay.setText("Fuyez pauvre fou !!!");
                     Fleeing();
+                }
+                else
+                {
+                    End();
                 }
 
         }
         else
         {
             textDisplay.setText(actualNode.strText);
-            //ICI --> actualNode.accessibleNodes = null !!
             if(actualNode.accessibleNodes != null)
             {
                 for (Map.Entry<String, String> entry : actualNode.accessibleNodes.entrySet()) {
@@ -206,13 +203,6 @@ public class GameActivity extends AppCompatActivity
         else if(reader.isAttributeChanged() == 2)
             imageView.setImageResource(R.drawable.lifepotion);
 
-        /*{
-            imageView.setImageResource(R.drawable.lifepotion);
-        }
-        else if(reader.isAttributeChanged() == 1)
-        {
-
-        }*/
     }
 
     public void Death()
