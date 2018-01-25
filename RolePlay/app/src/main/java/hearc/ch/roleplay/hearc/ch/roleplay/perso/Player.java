@@ -29,30 +29,4 @@ public class Player
     static public int life = 65;
     static public String actualNodes = "";
     static public int nbNode = 0;
-    static private ArrayList<String> list = new ArrayList<String>();
-    private static final String FILENAME=null;
-
-
-    public static boolean add(String pseudo)
-    {
-        if(list.contains(pseudo))
-        {
-            return false;
-        }
-        else
-        {
-            list.add(pseudo);
-            return true;
-        }
-    }
-
-    public static  ArrayList<String> getlist() {
-        list.add("Salut");
-        int listSize = list.size();
-        for (int i = 0; i < listSize; i++) {
-            Log.i("Member: ", list.get(i));
-        }
-        return list;
-    }
-
 }
