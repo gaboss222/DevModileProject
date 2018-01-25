@@ -7,11 +7,13 @@ import java.util.HashMap;
  */
 
 public class HistoryNode {
+    public  String strId = "";
     public String strText = "";
     public HashMap<String,String> accessibleNodes;
 
-    public HistoryNode(String text, HashMap<String,String> nodes)
+    public HistoryNode(String id, String text, HashMap<String,String> nodes)
     {
+        strId = id;
         strText = text;
         accessibleNodes = nodes;
     }

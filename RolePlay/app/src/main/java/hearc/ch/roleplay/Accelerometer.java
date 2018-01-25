@@ -51,10 +51,10 @@ public class Accelerometer implements SensorEventListener {
             double[] gravity = new double[2];
 
             gravity[0] = alpha * gravity[0] + (1 - alpha) * event.values[0];
-            gravity[1] = alpha * gravity[1] + (1 - alpha) * event.values[1];
+            gravity[1] = alpha * gravity[1] + (1 - alpha) * event.values[2];
 
             x = event.values[0] - gravity[0];
-            z = event.values[1] - gravity[1];
+            z = event.values[2] - gravity[1];
 
             double acc = Math.sqrt(Math.pow(x,2)+Math.pow(z,2));
             lAcceleration.add(acc);

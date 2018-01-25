@@ -28,11 +28,14 @@ public class LoadActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        final FileHandler fileHandler = new FileHandler(this.getApplicationContext());
         setContentView(R.layout.load_menu);
         lsSave = (ListView)findViewById(R.id.listSave);
         lsSave.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String strName = lsSave.getItemAtPosition(i).toString();
+                fileHandler.loadSave(strName);
                 Intent intent = new Intent(LoadActivity.this, GameActivity.class);
                 startActivity(intent);
             }
@@ -41,9 +44,8 @@ public class LoadActivity extends AppCompatActivity
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, saveFiles);
         lsSave.setAdapter(adapter);
-        FileHandler fileHandler = new FileHandler();
 
-        File[] fileSave = fileHandler.getSaves(this);
+        File[] fileSave = fileHandler.getSaves();
         for(File file : fileSave) {
             String name = file.getName();
             saveFiles.add(name);

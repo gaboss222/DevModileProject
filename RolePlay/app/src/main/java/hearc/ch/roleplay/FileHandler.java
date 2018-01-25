@@ -32,14 +32,19 @@ public class FileHandler
     private String endurance = "Endurance";
     private String life = "Life";
     private int attributeChanged = 0;
+    private Context context;
 
 
 
-    public FileHandler(){
+    public FileHandler(Context _context){
+        this.context = _context;
+        File folder = new File(context.getFilesDir(), "Save");
+        if(!folder.exists())
+            folder.mkdir();
     }
 
 
-    public HistoryNode readNode(String fileName, Context context)
+    public HistoryNode readNode(String fileName)
     {
         HashMap<String,String> childNodes = new HashMap<>();
         attributeChanged = 0;
@@ -78,13 +83,14 @@ public class FileHandler
 
             br.close() ;
         }catch (IOException e) {
+            Log.e("FileHandlerError", e.getMessage());
             text.append("There has been a problem with read of the file");
         }
         if(childNodes.isEmpty())
         {
             childNodes = null;
         }
-        return new HistoryNode(text.toString(), childNodes);
+        return new HistoryNode(fileName, text.toString(), childNodes);
     }
 
     public int isAttributeChanged()
@@ -92,7 +98,7 @@ public class FileHandler
         return attributeChanged;
     }
 
-    public boolean isNameInFile(Context context, String pseudo)
+    public boolean isNameInFile(String pseudo)
     {
         String fileName = "SaveName.txt";
         try
@@ -119,15 +125,12 @@ public class FileHandler
        return false;
     }
 
-    public void savePlayer(Context context, String pseudo)
+    public void savePlayer()
     {
         try
         {
             File folder = new File(context.getFilesDir(), "Save");
-            if(!folder.exists())
-                folder.mkdir();
-            String nameFile = pseudo+".txt";
-
+            String nameFile = Player.pseudo+".txt";
             File saveFile = new File(folder,nameFile);
             FileWriter writer = new FileWriter(saveFile);
             writer.append("Life;"+Player.life+"\n");
@@ -146,16 +149,16 @@ public class FileHandler
         }
     }
 
-    public File[] getSaves(Context context)
+    public File[] getSaves()
     {
         File saveFolder = new File(context.getFilesDir(),"Save");
         return saveFolder.listFiles();
     }
 
-    public void loadSave(Context context, String strName)
+    public void loadSave(String strPseudo)
     {
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(context.openFileInput("./Save/"+strName)));
+            BufferedReader br = new BufferedReader(new InputStreamReader(context.openFileInput("./Save/"+strPseudo)));
             String line ="";
             while ((line = br.readLine()) != null)
             {

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -40,7 +41,7 @@ public class GameActivity extends AppCompatActivity
     TextView txtEndurance;
     String strLife = "Life: ";
     String strEndurance = "Endurance: ";
-    Player p;
+
     final int iTimeFleeing = 3;
     final double dblDistanceFleeing = 15;
 
@@ -62,30 +63,36 @@ public class GameActivity extends AppCompatActivity
     @Override
     protected void onPause() {
         super.onPause();
-        FileHandler fileHandler = new FileHandler();
-        fileHandler.savePlayer(this, Player.pseudo);
+        Player.actualNodes = actualNode.strId;
+        FileHandler fileHandler = new FileHandler(this.getApplicationContext());
+        fileHandler.savePlayer();
     }
+
 
     public void Restart()
     {
         ClearButtons();
+        //J'ai tenté de mettre actualNode à A1.txt mais rien n'y fait, c'est toujours D1
+        actualNode = reader.readNode("A1.txt");
         Initialization();
     }
 
     public void Initialization()
     {
-        reader = new FileHandler();
-
+        reader = new FileHandler(this);
+        Player.actualNodes = "";
         setTxt(txtEndurance);
         setTxt(txtLife);
         textDisplay.setMovementMethod(new ScrollingMovementMethod());
         specialNodes = new ArrayList<>();
         buttonNodes = new ArrayList<>();
+
         if(Player.actualNodes != "")
-            actualNode = reader.readNode(Player.actualNodes+".txt", this.getApplicationContext());
+            actualNode = reader.readNode(Player.actualNodes + ".txt");
         else
-            actualNode = reader.readNode("A1.txt", this.getApplicationContext());
-        textDisplay.setText(actualNode.strText);
+            actualNode = reader.readNode("A1.txt");
+
+        DisplayNode();
     }
 
     //Create buttonNodes from nodes
@@ -147,13 +154,9 @@ public class GameActivity extends AppCompatActivity
     public void setTxt(TextView t)
     {
         if(t == txtEndurance)
-        {
             txtEndurance.setText(strEndurance + String.valueOf(Player.endurance));
-        }
         else
-        {
             txtLife.setText(strLife + String.valueOf(Player.life));
-        }
     }
 
     public void DisplayNode()
@@ -162,10 +165,10 @@ public class GameActivity extends AppCompatActivity
         textDisplay.scrollTo(0,0);
         ClearButtons();
         String firstChar = actualNode.strText.substring(0, 1);
-        if(firstChar.equals("*")) {
+        if(firstChar.equals("*"))
+        {
                 if(actualNode.strText.contains("*Fight"))
                 {
-                    imageView.setImageResource(R.drawable.fight);
                     String strId;
                     if(actualNode.accessibleNodes.size() == 2)
                         strId = (String) actualNode.accessibleNodes.keySet().toArray()[FightBinary()];
@@ -175,12 +178,16 @@ public class GameActivity extends AppCompatActivity
                     CallLoad(strId);
                 }
                 else if(actualNode.strText.contains("*Run")) {
-                    textDisplay.setText("Fuyez pauvre fou !!!");
                     Fleeing();
+                }
+                else
+                {
+                    End();
                 }
 
         }
-        else {
+        else
+        {
             textDisplay.setText(actualNode.strText);
             if(actualNode.accessibleNodes != null)
             {
@@ -193,16 +200,29 @@ public class GameActivity extends AppCompatActivity
         }
         setTxt(txtEndurance);
         setTxt(txtLife);
-        if(reader.isAttributeChanged() == 2)
+        if(reader.isAttributeChanged() == 1)
             imageView.setImageResource(R.drawable.endurancepotion);
-        /*{
+        else if(reader.isAttributeChanged() == 2)
             imageView.setImageResource(R.drawable.lifepotion);
-        }
-        else if(reader.isAttributeChanged() == 1)
-        {
 
-        }*/
     }
+
+
+    public void CallLoad(View v){CallLoad(v.getTag().toString());}
+
+    public void CallLoad(String strId)
+    {
+        LoadNode(strId + ".txt");
+    }
+
+    public void LoadNode(String strId)
+    {
+        Player.actualNodes = strId;
+        Player.nbNode++;
+        actualNode = reader.readNode(strId);
+        DisplayNode();
+    }
+
 
     public void Death()
     {
@@ -216,19 +236,6 @@ public class GameActivity extends AppCompatActivity
         textDisplay.setText("Vous avez fini le jeu, recommencez pour voir ce que les autres chemins de votre histoire vous résèrve.");
         CreateEndButton();
     }
-
-    public void CallLoad(View v){CallLoad(v.getTag().toString());}
-
-    public void CallLoad(String strId){LoadNode(strId + ".txt");}
-
-    public void LoadNode(String strId)
-    {
-        Player.actualNodes = strId;
-        Player.nbNode++;
-        actualNode = reader.readNode(strId, this.getApplicationContext());
-        DisplayNode();
-    }
-
 
     public int FightBinary()
     {
@@ -254,6 +261,7 @@ public class GameActivity extends AppCompatActivity
 
     public void Fleeing()
     {
+        textDisplay.setText("Courrez aussi vite que vous le pouvez !");
         accelerometer.onResume();
         int iExit = 0;
         new CountDownTimer(iTimeFleeing*1000,1000){
