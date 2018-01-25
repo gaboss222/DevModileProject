@@ -72,8 +72,7 @@ public class GameActivity extends AppCompatActivity
     public void Restart()
     {
         ClearButtons();
-        //J'ai tenté de mettre actualNode à A1.txt mais rien n'y fait, c'est toujours D1
-        actualNode = reader.readNode("A1.txt");
+        Player.actualNodes = "A1.txt";
         Initialization();
     }
 
