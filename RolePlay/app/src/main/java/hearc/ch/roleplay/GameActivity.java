@@ -80,7 +80,6 @@ public class GameActivity extends AppCompatActivity
     public void Initialization()
     {
         reader = new FileHandler(this);
-        Player.actualNodes = "";
         setTxt(txtEndurance);
         setTxt(txtLife);
         textDisplay.setMovementMethod(new ScrollingMovementMethod());
@@ -88,7 +87,7 @@ public class GameActivity extends AppCompatActivity
         buttonNodes = new ArrayList<>();
 
         if(Player.actualNodes != "")
-            actualNode = reader.readNode(Player.actualNodes + ".txt");
+            actualNode = reader.readNode(Player.actualNodes);
         else
             actualNode = reader.readNode("A1.txt");
 

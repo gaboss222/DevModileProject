@@ -38,6 +38,7 @@ public class LoadActivity extends AppCompatActivity
                 fileHandler.loadSave(strName);
                 Intent intent = new Intent(LoadActivity.this, GameActivity.class);
                 startActivity(intent);
+
             }
         });
         ArrayList<String> saveFiles = new ArrayList<>();
@@ -47,8 +48,10 @@ public class LoadActivity extends AppCompatActivity
 
         File[] fileSave = fileHandler.getSaves();
         for(File file : fileSave) {
-            String name = file.getName();
-            saveFiles.add(name);
+
+            String strName = file.getName();
+            if(!strName.equals("Save") && !strName.equals("SaveName.txt"))
+                saveFiles.add(strName);
         }
         adapter.notifyDataSetChanged();
 

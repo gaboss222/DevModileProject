@@ -7,9 +7,11 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Switch;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
@@ -38,7 +40,7 @@ public class FileHandler
 
     public FileHandler(Context _context){
         this.context = _context;
-        File folder = new File(context.getFilesDir(), "Save");
+        File folder = new File(context.getFilesDir(), "");
         if(!folder.exists())
             folder.mkdir();
     }
@@ -129,7 +131,7 @@ public class FileHandler
     {
         try
         {
-            File folder = new File(context.getFilesDir(), "Save");
+            File folder = new File(context.getFilesDir(), "");
             String nameFile = Player.pseudo+".txt";
             File saveFile = new File(folder,nameFile);
             FileWriter writer = new FileWriter(saveFile);
@@ -151,14 +153,15 @@ public class FileHandler
 
     public File[] getSaves()
     {
-        File saveFolder = new File(context.getFilesDir(),"Save");
+        File saveFolder = new File(context.getFilesDir(),"");
         return saveFolder.listFiles();
     }
 
     public void loadSave(String strPseudo)
     {
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(context.openFileInput("./Save/"+strPseudo)));
+            File file = new File(strPseudo);
+            BufferedReader br = new BufferedReader(new InputStreamReader(context.openFileInput(strPseudo)));
             String line ="";
             while ((line = br.readLine()) != null)
             {
