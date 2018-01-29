@@ -215,16 +215,16 @@ public class GameActivity extends AppCompatActivity
     }
 
 
-    //AXEL
+    //Get the tag of the button (v) in parameter and send it to CallLoad(string)
     public void CallLoad(View v){CallLoad(v.getTag().toString());}
 
-    //AXEL
+    //Load the node referenced in parameter
     public void CallLoad(String strId)
     {
         LoadNode(strId + ".txt");
     }
 
-    //AXEL
+    //Use to get the next node after the user take a choice
     public void LoadNode(String strId)
     {
         Player.actualNodes = strId;
@@ -250,7 +250,7 @@ public class GameActivity extends AppCompatActivity
         CreateEndButton();
     }
 
-    //FIGHT AXEL
+    //Simple fight call when there only two, the ennemi is too strong(compute by the number of node the player did) so the player die, if not he survive
     public int FightBinary()
     {
         int iEnnemiPower = Player.nbNode * 3;
@@ -259,7 +259,7 @@ public class GameActivity extends AppCompatActivity
         return 1;
     }
 
-    //FIGHT AXEL
+    //This fight is for harder boss who can make you lose life, even if the player win the fight
     public int Fight()
     {
         int iEnnemiPower = Player.nbNode * 3;
@@ -274,7 +274,7 @@ public class GameActivity extends AppCompatActivity
         return 2;
     }
 
-    //Accelerometer function
+    //Wake up the accelerometer and launch a timer of iTimeFleeing second,when it's over the accelerometer is stopped
     public void Fleeing()
     {
         textDisplay.setText("Courrez aussi vite que vous le pouvez !");
@@ -293,7 +293,7 @@ public class GameActivity extends AppCompatActivity
         }.start();
     }
 
-    //AXEL
+    //Will compute the distance traveled by the user, with the list of acceleration into the accelerator
     public void ComputeFleeingDistance()
     {
         ArrayList<Double> lAcceleration = accelerometer.lAcceleration;

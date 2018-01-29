@@ -31,21 +31,19 @@ import hearc.ch.roleplay.hearc.ch.roleplay.perso.Player;
 public class FileHandler
 {
 
+
     private String endurance = "Endurance";
     private String life = "Life";
     private int attributeChanged = 0;
     private Context context;
 
 
-
+    //The constructor
     public FileHandler(Context _context){
         this.context = _context;
-        File folder = new File(context.getFilesDir(), "");
-        if(!folder.exists())
-            folder.mkdir();
     }
 
-
+    //This function read an history node file and with it, create and return the corresponding HistoryNode object
     public HistoryNode readNode(String fileName)
     {
         HashMap<String,String> childNodes = new HashMap<>();
@@ -100,6 +98,7 @@ public class FileHandler
         return attributeChanged;
     }
 
+    //This function is use to know if a pseudo is already used in the Save file
     public boolean isNameInFile(String pseudo)
     {
         String fileName = "SaveName.txt";
@@ -127,6 +126,7 @@ public class FileHandler
        return false;
     }
 
+    //Save the player advancement, call when the game is closed
     public void savePlayer()
     {
         try
@@ -151,12 +151,14 @@ public class FileHandler
         }
     }
 
+    //Return every saved files, to display them into LoadActivity
     public File[] getSaves()
     {
         File saveFolder = new File(context.getFilesDir(),"");
         return saveFolder.listFiles();
     }
 
+    //Load the strPseudo Player advancement
     public void loadSave(String strPseudo)
     {
         try {
