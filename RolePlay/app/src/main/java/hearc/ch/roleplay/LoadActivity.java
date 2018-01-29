@@ -5,14 +5,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.view.View;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import java.io.File;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import hearc.ch.roleplay.R;
@@ -24,6 +20,8 @@ import hearc.ch.roleplay.R;
 public class LoadActivity extends AppCompatActivity
 {
     private ListView lsSave;
+
+    //onCreate, new fileHandler and prepare for load a existing save
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {

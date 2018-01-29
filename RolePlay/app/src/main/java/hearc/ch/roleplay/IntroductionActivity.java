@@ -3,7 +3,6 @@ package hearc.ch.roleplay;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -25,6 +24,8 @@ public class IntroductionActivity extends AppCompatActivity implements View.OnCl
     EditText pseudoEditText = null;
     String pseudo = null;
     static final String FILENAME = "save.txt";
+
+    //onCreate, initialize button/edittext/textview and waiting for a click on the button
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -38,6 +39,7 @@ public class IntroductionActivity extends AppCompatActivity implements View.OnCl
         btnSuivant.setOnClickListener(this);
     }
 
+    //check if pseudo is empty or not
     private String getPseudoEditText()
     {
         if(pseudoEditText.getText().length() > 0)
@@ -58,6 +60,7 @@ public class IntroductionActivity extends AppCompatActivity implements View.OnCl
 
     private void setTextView(String msg){ txtLORE.setText(msg); }
 
+    //Check if pseudo is existing and launch new game
     @Override
     public void onClick(View v)
     {
@@ -66,11 +69,10 @@ public class IntroductionActivity extends AppCompatActivity implements View.OnCl
             FileHandler r = new FileHandler(this);
             if(r.isNameInFile(pseudo))
             {
-                setTextView("Pseudo déjà utilisé");
+                setTextView("Le pseudo est déjà utilisé");
             }
             else
             {
-                Log.e("isNameIsInFile", "no");
                 Player.pseudo = pseudo;
                 Player.endurance = 50;
                 Player.life = 65;
@@ -83,7 +85,7 @@ public class IntroductionActivity extends AppCompatActivity implements View.OnCl
         }
         else
         {
-            setTextView("Rentrez un pseudoEditText");
+            setTextView("Rentrez un pseudo");
         }
 
     }

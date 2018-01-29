@@ -1,13 +1,11 @@
 package hearc.ch.roleplay;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -45,6 +43,7 @@ public class GameActivity extends AppCompatActivity
     final int iTimeFleeing = 3;
     final double dblDistanceFleeing = 15;
 
+    //onCreate, Initilize components and displaying story
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -60,6 +59,7 @@ public class GameActivity extends AppCompatActivity
         DisplayNode();
     }
 
+    //onPause
     @Override
     protected void onPause() {
         super.onPause();
@@ -68,14 +68,19 @@ public class GameActivity extends AppCompatActivity
         fileHandler.savePlayer();
     }
 
-
+    //Restart --> reset nodes, initialization and clear buttons
     public void Restart()
     {
         ClearButtons();
+        Player.life = 65;
+        Player.endurance = 50;
+        setTxt(txtEndurance);
+        setTxt(txtLife);
         Player.actualNodes = "A1.txt";
         Initialization();
     }
 
+    //Initialise reader, specialNodes and buttonNodes
     public void Initialization()
     {
         reader = new FileHandler(this);
@@ -111,7 +116,7 @@ public class GameActivity extends AppCompatActivity
         ll.addView(myButton, lp);
     }
 
-    //Create the buttonNodes when the game is over or the player die
+    //Create the buttonNodes when the game is over or the player dies
     public void CreateEndButton()
     {
         Button btnRestart = new Button(this);
@@ -149,6 +154,7 @@ public class GameActivity extends AppCompatActivity
         buttonNodes.clear();
     }
 
+    //set endurance/life text with player attributes
     public void setTxt(TextView t)
     {
         if(t == txtEndurance)
@@ -157,6 +163,9 @@ public class GameActivity extends AppCompatActivity
             txtLife.setText(strLife + String.valueOf(Player.life));
     }
 
+    //Display text from files
+    //if action (fight/run), do something
+    //Create and display buttons for each textfile
     public void DisplayNode()
     {
         imageView.setImageResource(0);
@@ -206,13 +215,16 @@ public class GameActivity extends AppCompatActivity
     }
 
 
+    //AXEL
     public void CallLoad(View v){CallLoad(v.getTag().toString());}
 
+    //AXEL
     public void CallLoad(String strId)
     {
         LoadNode(strId + ".txt");
     }
 
+    //AXEL
     public void LoadNode(String strId)
     {
         Player.actualNodes = strId;
@@ -221,20 +233,24 @@ public class GameActivity extends AppCompatActivity
         DisplayNode();
     }
 
-
+    //if player is dead
     public void Death()
     {
         textDisplay.setText(textDisplay.getText() + "\n Vous êtes mort");
+        Player.life = 0;
+        setTxt(txtLife);
         CreateEndButton();
 
     }
 
+    //At the end of the story
     public void End()
     {
         textDisplay.setText("Vous avez fini le jeu, recommencez pour voir ce que les autres chemins de votre histoire vous résèrve.");
         CreateEndButton();
     }
 
+    //FIGHT AXEL
     public int FightBinary()
     {
         int iEnnemiPower = Player.nbNode * 3;
@@ -243,6 +259,7 @@ public class GameActivity extends AppCompatActivity
         return 1;
     }
 
+    //FIGHT AXEL
     public int Fight()
     {
         int iEnnemiPower = Player.nbNode * 3;
@@ -257,6 +274,7 @@ public class GameActivity extends AppCompatActivity
         return 2;
     }
 
+    //Accelerometer function
     public void Fleeing()
     {
         textDisplay.setText("Courrez aussi vite que vous le pouvez !");
@@ -275,6 +293,7 @@ public class GameActivity extends AppCompatActivity
         }.start();
     }
 
+    //AXEL
     public void ComputeFleeingDistance()
     {
         ArrayList<Double> lAcceleration = accelerometer.lAcceleration;
