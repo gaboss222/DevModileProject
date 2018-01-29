@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">RolePlay by GGR and BDA</string>
+    <string name="title_name">RolePlay</string>
+    <string name="new_game">NewGame</string>
+    <string name="load_game">LoadGame</string>
+    <string name="quit_game">QuitGame</string>
+    <string name="txtQuestion">Question</string>
+    <string name="txtDescription"></string>
+    <string name="btnRep1">Rep1</string>
+    <string name="btnRep2">Rep2</string>
+    <string name="btnRep3">Rep3</string>
+</resources>
